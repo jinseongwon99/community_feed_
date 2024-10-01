@@ -1,6 +1,7 @@
 package com.jinsungwon99.post.domain;
 
 import com.jinsungwon99.common.domain.PositiveIntegerCounter;
+import com.jinsungwon99.post.domain.common.DatetimeInfo;
 import com.jinsungwon99.post.domain.content.PostContent;
 import com.jinsungwon99.post.domain.content.PostPublicatuionState;
 import com.jinsungwon99.user.domain.User;
@@ -38,10 +39,27 @@ public class Post {
         likeCount.decrease();
     }
     public void updatePost(User user,String updateContent,PostPublicatuionState state){
-        if(this.author.equals(user)){
+        if(!this.author.equals(user)){
             throw new IllegalArgumentException();
         }
         this.state = state;
         this.content.updateContent(updateContent);
+    }
+
+    public int getLikeCount() {
+        return likeCount.getCount();
+    }
+
+    public String getContent() {
+        return content.getContentText();
+    }
+
+    public DatetimeInfo getDatetimeInfo() {
+        return content.getDatetimeInfo();
+    }
+
+
+    public PostPublicatuionState getState() {
+        return state;
     }
 }

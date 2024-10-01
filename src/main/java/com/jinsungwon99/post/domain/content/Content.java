@@ -26,5 +26,7 @@ public abstract class Content  {
         return contentText;
     }
 
-
+    public DatetimeInfo getDatetimeInfo() {
+        return datetimeInfo;
+    }
 }
