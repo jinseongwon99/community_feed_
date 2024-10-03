@@ -18,9 +18,9 @@ class PostTest {
     private final User user2 = new User(2L,userInfo);
 
     @BeforeEach
-    void init(){
+    void init() {
         postContent = new PostContent("글작성합니다");
-        post1 = new Post(1L,user1,postContent);
+        post1 = new Post(1L, user1, postContent);
 
     }
 
