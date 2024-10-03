@@ -3,7 +3,7 @@ package com.jinsungwon99.post.domain;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.jinsungwon99.post.domain.content.PostContent;
-import com.jinsungwon99.post.domain.content.PostPublicatuionState;
+import com.jinsungwon99.post.domain.content.PostPublicationState;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.domain.UserInfo;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,10 +69,21 @@ class PostTest {
     void givenCreatePost_whenUpdate_thenSave(){
         //given
         //when
-        post1.updatePost(user1,"수정했습니다", PostPublicatuionState.PUBLIC);
+        post1.updatePost(user1,"수정했습니다", PostPublicationState.PUBLIC);
 
         //then
         assertEquals("수정했습니다", post1.getContent());
-        assertEquals(PostPublicatuionState.PUBLIC, post1.getState());
+        assertEquals(PostPublicationState.PUBLIC, post1.getState());
+    }
+
+    /*
+        다른 사람이 수정 (권한 X) -> 예외
+     */
+    @Test
+    void givenCreatePost_whenUpdatePostOther_thenThrowError() {
+
+        // then
+        assertThrows(IllegalArgumentException.class,
+            () -> post1.updatePost(user2, "수정했습니다", PostPublicationState.PUBLIC));
     }
 }

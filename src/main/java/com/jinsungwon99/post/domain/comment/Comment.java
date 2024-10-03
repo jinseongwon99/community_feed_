@@ -2,6 +2,7 @@ package com.jinsungwon99.post.domain.comment;
 
 import com.jinsungwon99.common.domain.PositiveIntegerCounter;
 import com.jinsungwon99.post.domain.Post;
+import com.jinsungwon99.post.domain.content.CommentContent;
 import com.jinsungwon99.post.domain.content.Content;
 import com.jinsungwon99.user.domain.User;
 
@@ -10,10 +11,10 @@ public class Comment {
     private final Long id;
     private final Post post;
     private final User author;
-    private final Content content;
+    private final CommentContent content;
     private final PositiveIntegerCounter likeCount;
 
-    public Comment(Long id, Post post, User author, Content content){
+    public Comment(Long id, Post post, User author, CommentContent content){
 
         if (author == null){
 
@@ -46,9 +47,17 @@ public class Comment {
     }
 
     public void updateComment(User user,String updateContent){
-        if(this.author.equals(user)){
+        if(!this.author.equals(user)){
             throw new IllegalArgumentException();
         }
         this.content.updateContent(updateContent);
+    }
+
+    public String getContent() {
+        return content.getContentText();
+    }
+
+    public int getLikeCount() {
+        return likeCount.getCount();
     }
 }
