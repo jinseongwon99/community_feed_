@@ -2,6 +2,7 @@ package com.jinsungwon99.post.domain;
 
 import com.jinsungwon99.common.domain.PositiveIntegerCounter;
 import com.jinsungwon99.post.domain.common.DatetimeInfo;
+import com.jinsungwon99.post.domain.content.Content;
 import com.jinsungwon99.post.domain.content.PostContent;
 import com.jinsungwon99.post.domain.content.PostPublicationState;
 import com.jinsungwon99.user.domain.User;
@@ -86,5 +87,16 @@ public class Post {
 
     public PostPublicationState getState() {
         return state;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+    public PostContent getContentObject(){
+        return content;
     }
 }
