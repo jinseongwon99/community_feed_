@@ -33,4 +33,20 @@ public class FakeObjectFactory {
     private static final CommentService commentService = new CommentService(userService,fakeCommentRepository,postService,fakeLikeCommentRepository);
 
     private FakeObjectFactory(){}
+
+    public static UserService getUserService(){
+        return userService;
+    }
+
+    public static UserRelationService getUserRelationService(){
+        return userRelationService;
+    }
+
+    public static PostService getPostService(){
+        return postService;
+    }
+
+    public static CommentService getCommentService(){
+        return commentService;
+    }
 }

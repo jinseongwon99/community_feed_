@@ -96,7 +96,12 @@ public class Post {
     public User getAuthor() {
         return author;
     }
+
+    public Long getAuthorId() {
+        return author.getId();
+    }
     public PostContent getContentObject(){
         return content;
     }
+
 }

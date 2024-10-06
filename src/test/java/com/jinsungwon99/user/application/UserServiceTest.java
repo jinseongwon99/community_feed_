@@ -2,17 +2,15 @@ package com.jinsungwon99.user.application;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.jinsungwon99.fake.FakeObjectFactory;
 import com.jinsungwon99.user.application.dto.CreateUserRequestDto;
-import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.domain.UserInfo;
-import com.jinsungwon99.user.repository.FakeUserRepository;
 import org.junit.jupiter.api.Test;
 
 class UserServiceTest {
 
-    private final UserRepository userRepository = new FakeUserRepository();
-    private final UserService userService = new UserService(userRepository);
+    private final UserService userService = FakeObjectFactory.getUserService();
 
     @Test
     void givenUserInfoDto_whenCreateUser_thenCanFindUser(){

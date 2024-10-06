@@ -4,6 +4,7 @@ import com.jinsungwon99.post.application.Interfaces.LikePostRepository;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.user.domain.User;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,10 +26,10 @@ public class FakeLikePostRepository implements LikePostRepository {
     public void like(User user, Post post) {
         Set<User> users = store.get(post);
         if(users == null){
-            users = Set.of(user);
-        }else{
-            users.add(user);
+            users = new HashSet<>();
         }
+        users.add(user);
+        store.put(post,users);
     }
 
     @Override
