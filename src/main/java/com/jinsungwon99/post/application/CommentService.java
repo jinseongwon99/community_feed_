@@ -2,11 +2,9 @@ package com.jinsungwon99.post.application;
 
 import com.jinsungwon99.post.application.Interfaces.CommentRepository;
 import com.jinsungwon99.post.application.Interfaces.LikeCommentRepository;
-import com.jinsungwon99.post.application.Interfaces.LikePostRepository;
 import com.jinsungwon99.post.application.dto.CreateCommentRequestDto;
 import com.jinsungwon99.post.application.dto.LikeCommentRequestDto;
 import com.jinsungwon99.post.application.dto.UpdateCommentRequestDto;
-import com.jinsungwon99.post.application.dto.UpdatePostRequestDto;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.domain.comment.Comment;
 import com.jinsungwon99.user.application.UserService;
