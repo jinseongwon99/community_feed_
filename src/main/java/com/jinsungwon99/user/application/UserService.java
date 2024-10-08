@@ -5,7 +5,9 @@ import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.domain.UserInfo;
 import java.util.IllformedLocaleException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
