@@ -19,7 +19,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     //mysql
-    implementation("com.mysql:mysql-connector-j")
+    implementation("mysql:mysql-connector-j")
+
 
     //lombok
     implementation("org.projectlombok:lombok")

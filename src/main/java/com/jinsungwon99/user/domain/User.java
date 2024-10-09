@@ -2,7 +2,13 @@ package com.jinsungwon99.user.domain;
 
 import com.jinsungwon99.common.domain.PositiveIntegerCounter;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class User {
 
     private final Long id;
@@ -71,11 +77,12 @@ public class User {
         return followingCount.getCount();
     }
 
-    public Long getId() {
-        return id;
+    public String getName(){
+        return info.getName();
     }
 
-    public UserInfo getInfo() {
-        return info;
+    public String getProfileImage(){
+        return info.getProfileImage();
     }
+
 }

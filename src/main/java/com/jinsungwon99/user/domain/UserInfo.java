@@ -18,4 +18,9 @@ public class UserInfo {
     public String getName() {
         return name;
     }
+
+    public String getProfileImage(){
+        return profileImageUrl;
+    }
+
 }
