@@ -2,11 +2,16 @@ package com.jinsungwon99.post.domain;
 
 import com.jinsungwon99.common.domain.PositiveIntegerCounter;
 import com.jinsungwon99.post.domain.common.DatetimeInfo;
-import com.jinsungwon99.post.domain.content.Content;
 import com.jinsungwon99.post.domain.content.PostContent;
 import com.jinsungwon99.post.domain.content.PostPublicationState;
 import com.jinsungwon99.user.domain.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class Post {
 
     private final Long id;
@@ -84,18 +89,6 @@ public class Post {
         return content.getDatetimeInfo();
     }
 
-
-    public PostPublicationState getState() {
-        return state;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
 
     public Long getAuthorId() {
         return author.getId();

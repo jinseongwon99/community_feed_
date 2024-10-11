@@ -3,9 +3,14 @@ package com.jinsungwon99.post.domain.comment;
 import com.jinsungwon99.common.domain.PositiveIntegerCounter;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.domain.content.CommentContent;
-import com.jinsungwon99.post.domain.content.Content;
 import com.jinsungwon99.user.domain.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
+@Builder
+@AllArgsConstructor
+@Getter
 public class Comment {
 
     private final Long id;

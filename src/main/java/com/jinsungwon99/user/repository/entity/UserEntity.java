@@ -28,6 +28,9 @@ public class UserEntity extends TimeBaseEntity {
     private Integer followingCount;
     private Integer followerCount;
 
+/*    @OneToMany
+    private List<PostEntity> posts;*/ //실무에서는 OneToMany 잘 사용 안함 (다수의 데이터 때문에) ex) 게시글이 1000개 있을때
+
     public  UserEntity(User user){
         this.id = user.getId();
         this.name = user.getName();
