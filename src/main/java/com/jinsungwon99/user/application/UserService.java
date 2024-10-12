@@ -4,7 +4,6 @@ import com.jinsungwon99.user.application.dto.CreateUserRequestDto;
 import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.domain.UserInfo;
-import java.util.IllformedLocaleException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +22,6 @@ public class UserService {
         return userRepository.save(user);
     }
     public User getUser(Long id){
-        return userRepository.findById(id).orElseThrow(IllformedLocaleException::new);
+        return userRepository.findById(id);
     }
 }
