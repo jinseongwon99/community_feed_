@@ -28,16 +28,18 @@ public class JpaUserListPagingQueryRepository {
             .from(relation)
             .join(user).on(relation.followingUserId.eq(user.id))
             .where(relation.followerUserId.eq(userId),
-                    hasLastData(lastFollowerId))
+                    hasLastData(lastFollowerId))    //데이터 중복 방지
             .orderBy(user.id.desc())
             .limit(20)
             .fetch();
     }
-
+    //페이징 처리에서 전페이지 데이터 중복 방지
     private BooleanExpression hasLastData(Long lastId){
         if (lastId == null){
             return null;
         }
+        //lt(값) : 값보다 작은 값
+        //gt(값) : 값보다 높은 값
         return user.id.lt(lastId);
     }
 }
