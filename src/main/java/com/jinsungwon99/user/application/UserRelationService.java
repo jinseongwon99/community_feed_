@@ -3,7 +3,9 @@ package com.jinsungwon99.user.application;
 import com.jinsungwon99.user.application.dto.FollowUserRequestDto;
 import com.jinsungwon99.user.application.interfaces.UserRelationRepository;
 import com.jinsungwon99.user.domain.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserRelationService {
 
     private final UserService userService;
