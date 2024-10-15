@@ -1,6 +1,7 @@
 package com.jinsungwon99.user.application;
 
 import com.jinsungwon99.user.application.dto.CreateUserRequestDto;
+import com.jinsungwon99.user.application.dto.GetUserResponseDto;
 import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.domain.UserInfo;
@@ -23,5 +24,9 @@ public class UserService {
     }
     public User getUser(Long id){
         return userRepository.findById(id);
+    }
+
+    public GetUserResponseDto getUserProfile(Long id){
+        return new GetUserResponseDto(getUser(id));
     }
 }
