@@ -9,7 +9,9 @@ import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.domain.comment.Comment;
 import com.jinsungwon99.user.application.UserService;
 import com.jinsungwon99.user.domain.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CommentService {
 
     private final UserService userService;
@@ -26,7 +28,7 @@ public class CommentService {
     }
 
     public Comment getComment(Long id){
-        return commentRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Comment Not Found"));
+        return commentRepository.findById(id);
     }
 
     public Comment createComment(CreateCommentRequestDto requestDto){
@@ -39,8 +41,8 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment updateComment(UpdateCommentRequestDto requestDto){
-        Comment comment = getComment(requestDto.commentId());
+    public Comment updateComment(Long commentId,UpdateCommentRequestDto requestDto){
+        Comment comment = getComment(commentId);
         User user = userService.getUser(requestDto.userId());
 
         comment.updateComment(user, requestDto.content());

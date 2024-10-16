@@ -53,8 +53,8 @@ class CommentServiceTest {
         Comment comment = commentService.createComment(dto);
 
         //when
-        UpdateCommentRequestDto updateDto = new UpdateCommentRequestDto(comment.getId(),comment.getAuthorId(),comment.getPostId(),"업데이트합니다");
-        Comment updateComment = commentService.updateComment(updateDto);
+        UpdateCommentRequestDto updateDto = new UpdateCommentRequestDto(comment.getAuthorId(),comment.getPostId(),"업데이트합니다");
+        Comment updateComment = commentService.updateComment(comment.getId(), updateDto);
 
         //then
         assertEquals(updateDto.content(),updateComment.getContent());
