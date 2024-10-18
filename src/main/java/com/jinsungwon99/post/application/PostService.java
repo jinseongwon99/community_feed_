@@ -10,6 +10,7 @@ import com.jinsungwon99.post.domain.content.PostContent;
 import com.jinsungwon99.user.application.UserService;
 import com.jinsungwon99.user.domain.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
@@ -31,21 +32,21 @@ public class PostService {
     }
 
     public Post createPost(CreatePostRequestDto requestDto){
-        User user = userService.getUser(requestDto.userid());
+        User user = userService.getUser(requestDto.userId());
         PostContent content = new PostContent(requestDto.content());
         Post post = new Post(null,user,content,requestDto.state());
 
         return postRepository.save(post);
     }
-
+    @Transactional
     public Post updatePost(Long postId,UpdatePostRequestDto requestDto){
-        User user = userService.getUser(requestDto.userid());
+        User user = userService.getUser(requestDto.userId());
         Post post = getPost(postId);
         post.updatePost(user,requestDto.content(),requestDto.state());
 
         return postRepository.save(post);
     }
-
+    @Transactional
     public void likePost(LikePostRequestDto requestDto){
         User user = userService.getUser(requestDto.userId());
         Post post = getPost(requestDto.postId());
@@ -53,16 +54,14 @@ public class PostService {
         if (likePostRepository.checkLike(user,post)){
             return;
         }
-        post.like(user);
         likePostRepository.like(user,post);
     }
-
+    @Transactional
     public void unlikePost(LikePostRequestDto requestDto){
         User user = userService.getUser(requestDto.userId());
         Post post = getPost(requestDto.postId());
 
         if(likePostRepository.checkLike(user,post)){
-            post.unlike();
             likePostRepository.unlike(user,post);
         }
     }
