@@ -1,7 +1,6 @@
 package com.jinsungwon99.post.ui;
 
 import com.jinsungwon99.common.ui.Response;
-import com.jinsungwon99.post.application.CommentService;
 import com.jinsungwon99.post.application.PostService;
 import com.jinsungwon99.post.application.dto.CreatePostRequestDto;
 import com.jinsungwon99.post.application.dto.LikePostRequestDto;

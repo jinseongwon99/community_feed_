@@ -54,6 +54,7 @@ public class PostService {
         if (likePostRepository.checkLike(user,post)){
             return;
         }
+        post.like(user);
         likePostRepository.like(user,post);
     }
     @Transactional
@@ -62,6 +63,7 @@ public class PostService {
         Post post = getPost(requestDto.postId());
 
         if(likePostRepository.checkLike(user,post)){
+            post.unlike();
             likePostRepository.unlike(user,post);
         }
     }

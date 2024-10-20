@@ -4,6 +4,8 @@ import com.jinsungwon99.post.application.Interfaces.PostRepository;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.repository.entity.post.PostEntity;
 import com.jinsungwon99.post.repository.jpa.JpaPostRepository;
+import com.jinsungwon99.post.repository.jpa.JpaUserPostQueueRepository;
+import com.jinsungwon99.post.repository.post_queue.UserPostQueueCommandRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class PostRepositoryImpl implements PostRepository {
 
     private final JpaPostRepository jpaPostRepository;
-
+    private final UserPostQueueCommandRepository userPostQueueCommandRepository;
 
     @Override
     public Post save(Post post) {
@@ -22,6 +24,7 @@ public class PostRepositoryImpl implements PostRepository {
             return entity.toPost();
         }
         entity = jpaPostRepository.save(entity);
+        userPostQueueCommandRepository.publishPost(entity);
         return entity.toPost();
     }
 
