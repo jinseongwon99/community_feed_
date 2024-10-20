@@ -14,4 +14,6 @@ public interface JpaCommentRepository extends JpaRepository<CommentEntity,Long> 
         + "c.updDt = now() "
         + "where c.id = :#{#commentEntity.getId()}")
     void updateLikeCommentEntity(CommentEntity commentEntity);
+
+
 }
