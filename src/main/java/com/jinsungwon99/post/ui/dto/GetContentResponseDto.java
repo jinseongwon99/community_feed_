@@ -18,8 +18,8 @@ public class GetContentResponseDto {
     private Long userId;
     private String userName;
     private String userProfileImageUrl;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Integer likeCount;
     private boolean isLikedByMe;
 }
