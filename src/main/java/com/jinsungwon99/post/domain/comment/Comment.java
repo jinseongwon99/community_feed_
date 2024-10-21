@@ -66,27 +66,9 @@ public class Comment {
     public String getContent() {
         return content.getContentText();
     }
-
     public int getLikeCount() {
         return likeCount.getCount();
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public Long getPostId() {
-        return post.getId();
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
     public Long getAuthorId() {
         return author.getId();
     }
