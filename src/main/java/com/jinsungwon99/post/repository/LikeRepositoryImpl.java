@@ -43,7 +43,7 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
 
         entityManager.persist(likeEntity);
         //commentEntity LikeCount 증가
-        jpaCommentRepository.updateLikeCommentEntity(new CommentEntity(comment));
+        jpaCommentRepository.updateLikeCommentEntity(comment.getId(), 1);
 
     }
 
@@ -54,7 +54,7 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
 
         jpaLikeRepository.deleteById(likeEntity.getId());
         //commentEntity LikeCount 감소
-        jpaCommentRepository.updateLikeCommentEntity(new CommentEntity(comment));
+        jpaCommentRepository.updateLikeCommentEntity(comment.getId(), -1);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
         // = jpaLikeRepository.save(likeEntity); => select 로 조회 후 저장할 값 merge
         entityManager.persist(likeEntity);
         //postEntity LikeCount 증가
-        jpaPostRepository.updateLikePostEntity(new PostEntity(post));
+        jpaPostRepository.updateLikePostEntity(post.getId(), 1);
     }
 
     @Override
@@ -82,6 +82,6 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
 
         jpaLikeRepository.deleteById(likeEntity.getId());
         //postEntity LikeCount 감소
-        jpaPostRepository.updateLikePostEntity(new PostEntity(post));
+        jpaPostRepository.updateLikePostEntity(post.getId(), -1);
     }
 }
