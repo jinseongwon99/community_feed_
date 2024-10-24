@@ -75,5 +75,6 @@ public class Comment {
     public CommentContent getContentObject(){
         return content;
     }
+    public Long getPostId(){return post.getId();}
 
 }

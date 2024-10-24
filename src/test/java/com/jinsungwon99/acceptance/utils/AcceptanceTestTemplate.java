@@ -18,7 +18,7 @@ public class AcceptanceTestTemplate {
 
     @BeforeEach
     public void init(){
-        cleanUp.excute(); // DB 초기화, ID값 초기화
+        cleanUp.execute(); // DB 초기화, ID값 초기화
         loader.loadData(); // 샘플 데이터 주입
     }
 }
