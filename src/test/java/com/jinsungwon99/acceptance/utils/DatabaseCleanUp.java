@@ -34,7 +34,7 @@ public class DatabaseCleanUp implements InitializingBean {
     }
 
     @Transactional
-    public void excute(){
+    public void execute(){
         entityManager.flush(); // <- commit
         // 연결되 외래키 끊기
         entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
