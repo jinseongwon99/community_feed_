@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface JpaPostRepository extends JpaRepository<PostEntity,Long> {
 
 
-    @Query("SELECT p.id FROM PostEntity p "
+    @Query("SELECT p FROM PostEntity p "
         + " WHERE p.author.id = :authorId ")
-    List<Long> findFollowingPosts(Long authorId);
+    List<PostEntity> findFollowingPosts(Long authorId);
 
 
     @Modifying

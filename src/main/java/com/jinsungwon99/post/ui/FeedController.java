@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class FeedController {
 
-    private final UserPostQueueQueryRepository userPostQueueQueryRepository;
+   private final UserPostQueueQueryRepository userPostQueueQueryRepository;
 
     @GetMapping("/{userId}")
     public Response<List<GetPostContentResponseDto>> getPostFeed(@PathVariable(name = "userId") Long userId,Long lastPostId){
