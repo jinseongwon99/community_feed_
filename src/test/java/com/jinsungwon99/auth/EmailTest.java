@@ -1,9 +1,9 @@
-package com.jinsungwon99.auth.domain;
+package com.jinsungwon99.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.assertj.core.util.Strings;
+import com.jinsungwon99.auth.domain.Email;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;

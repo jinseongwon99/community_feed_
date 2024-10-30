@@ -1,4 +1,4 @@
-package com.jinsungwon99.acceptance.auth;
+package com.jinsungwon99.auth;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
