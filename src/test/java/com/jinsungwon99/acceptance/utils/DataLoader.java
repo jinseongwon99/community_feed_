@@ -9,7 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 
-// 샘플데이터 생성 
+// 샘플데이터 생성 + 데이터 조회
 @Component
 public class DataLoader {
 
@@ -18,7 +18,7 @@ public class DataLoader {
 
     public void loadData(){
         CreateUserRequestDto dto = new CreateUserRequestDto("test user", "");
-        //테스 API 호출
+        //테스트 API 호출
         createUser(dto);
         createUser(dto);
         createUser(dto);
@@ -32,5 +32,12 @@ public class DataLoader {
             .setParameter(1, email)
             .getSingleResult()
             .toString();
+    }
+    
+    //해당 이메일 인증 여부 확인
+    public boolean isEmailVerified(String email){
+        return entityManager.createQuery("SELECT isVerified FROM EmailVerificationEntity WHERE email = :email", Boolean.class)
+            .setParameter("email",email)
+            .getSingleResult();
     }
 }
