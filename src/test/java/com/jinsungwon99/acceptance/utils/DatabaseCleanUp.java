@@ -30,7 +30,7 @@ public class DatabaseCleanUp implements InitializingBean {
             .toList();
 
         //초기화 안함
-        notGeneratedIdTableNames = List.of("community_user_relation","community_like");
+        notGeneratedIdTableNames = List.of("community_user_auth","community_user_relation","community_like");
     }
 
     @Transactional

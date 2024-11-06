@@ -1,6 +1,8 @@
 package com.jinsungwon99.auth.ui;
 
+import com.jinsungwon99.auth.application.AuthService;
 import com.jinsungwon99.auth.application.EmailService;
+import com.jinsungwon99.auth.application.dto.CreateUserAuthRequestDto;
 import com.jinsungwon99.auth.application.dto.SendEmailRequestDto;
 import com.jinsungwon99.common.ui.Response;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignUpController {
 
     private final EmailService emailService;
+    private final AuthService authService;
 
     @PostMapping("/send-verification-email")
     public Response<Void> sendEmail(@RequestBody SendEmailRequestDto dto){
@@ -28,4 +31,11 @@ public class SignUpController {
         emailService.verifyEmail(email,token);
         return Response.ok(null);
     }
+
+    @PostMapping("/register")
+    public Response<Long> register(@RequestBody CreateUserAuthRequestDto dto){
+       Long id = authService.registerUser(dto);
+        return Response.ok(id);
+    }
+
 }

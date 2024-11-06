@@ -1,5 +1,6 @@
 package com.jinsungwon99.acceptance.auth;
 
+import static com.jinsungwon99.acceptance.steps.SignUpAcceptanceSteps.registerUser;
 import static com.jinsungwon99.acceptance.steps.SignUpAcceptanceSteps.requestSendEmail;
 import static com.jinsungwon99.acceptance.steps.SignUpAcceptanceSteps.requestVerifyEmail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,7 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.jinsungwon99.acceptance.utils.AcceptanceTestTemplate;
+import com.jinsungwon99.auth.application.dto.CreateUserAuthRequestDto;
 import com.jinsungwon99.auth.application.dto.SendEmailRequestDto;
+import com.jinsungwon99.auth.domain.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -114,4 +117,40 @@ public class SingUpAcceptanceTest extends AcceptanceTestTemplate {
         //then
         assertEquals(400,code);
     }
+
+    //정상 회원 가입
+    @Test
+    void  givenVerifiedEmail_whenRegister_thenUserRegistered(){
+
+        //given
+        requestSendEmail(new SendEmailRequestDto(email));
+        String token = getEmailToken(email);
+        requestVerifyEmail(email,token);
+
+        //when
+        CreateUserAuthRequestDto dto =new CreateUserAuthRequestDto(email,"1111", "USER","홍길동","");
+        Integer code =registerUser(dto);
+
+        //then
+        assertEquals(0,code);
+        Long userId = getUserId(email);
+        assertEquals(1L,userId);
+    }
+
+    //인증하지 않은 이메일로 가입
+    @Test
+    void givenUnverifiedEmail_whenRegister_thenThrowError(){
+
+        //given
+        requestSendEmail(new SendEmailRequestDto(email));
+
+        //when
+        CreateUserAuthRequestDto dto =new CreateUserAuthRequestDto(email,"1111", "USER","홍길동","");
+        Integer code =registerUser(dto);
+
+        //then
+        assertEquals(400,code);
+    }
+
+
 }

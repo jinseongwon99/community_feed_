@@ -40,4 +40,11 @@ public class DataLoader {
             .setParameter("email",email)
             .getSingleResult();
     }
+
+    public Long getUserId(String email){
+        return (Long) entityManager.createQuery("SELECT userId FROM UserAuthEntity WHERE email = :email", Long.class)
+            .setParameter("email", email)
+            .getSingleResult();
+    }
+
 }
