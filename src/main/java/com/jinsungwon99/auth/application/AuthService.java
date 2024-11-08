@@ -3,7 +3,10 @@ package com.jinsungwon99.auth.application;
 import com.jinsungwon99.auth.application.Interfaces.EmailVerificationRepository;
 import com.jinsungwon99.auth.application.Interfaces.UserAuthRepository;
 import com.jinsungwon99.auth.application.dto.CreateUserAuthRequestDto;
+import com.jinsungwon99.auth.application.dto.LoginRequestDto;
+import com.jinsungwon99.auth.application.dto.UserAccessTokenResponseDto;
 import com.jinsungwon99.auth.domain.Email;
+import com.jinsungwon99.auth.domain.TokenProvider;
 import com.jinsungwon99.auth.domain.UserAuth;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.domain.UserInfo;
@@ -16,6 +19,7 @@ public class AuthService {
 
     private final UserAuthRepository userAuthRepository;
     private final EmailVerificationRepository emailVerificationRepository;
+    private final TokenProvider tokenProvider;
 
     public Long registerUser(CreateUserAuthRequestDto dto){
 
@@ -36,5 +40,13 @@ public class AuthService {
 
          return userAuth.getUserId();
     }
+    
+    public UserAccessTokenResponseDto login (LoginRequestDto dto){
+        UserAuth userAuth = userAuthRepository.loginUser(dto.email(),dto.password());
+        
+        //정상 로그인 시 -> 토큰 생성
+        String token = tokenProvider.createToken(userAuth.getUserId(),userAuth.getUserRole());
 
+        return new UserAccessTokenResponseDto(token);
+    }
 }

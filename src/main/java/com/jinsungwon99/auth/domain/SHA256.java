@@ -17,7 +17,7 @@ public class SHA256 {
         }
     }
 
-    public static String bytesToHex(byte[] bytes){
+     public static String bytesToHex(byte[] bytes){
         StringBuffer sb = new StringBuffer();
         for (byte b : bytes){
             sb.append(String.format("%02x",b));

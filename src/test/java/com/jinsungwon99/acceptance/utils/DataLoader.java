@@ -1,9 +1,12 @@
 package com.jinsungwon99.acceptance.utils;
 
-import static com.jinsungwon99.acceptance.steps.UserAcceptanceSteps.createUser;
+import static com.jinsungwon99.acceptance.steps.SignUpAcceptanceSteps.registerUser;
+import static com.jinsungwon99.acceptance.steps.SignUpAcceptanceSteps.requestSendEmail;
+import static com.jinsungwon99.acceptance.steps.SignUpAcceptanceSteps.requestVerifyEmail;
 import static com.jinsungwon99.acceptance.steps.UserAcceptanceSteps.followUser;
 
-import com.jinsungwon99.user.application.dto.CreateUserRequestDto;
+import com.jinsungwon99.auth.application.dto.CreateUserAuthRequestDto;
+import com.jinsungwon99.auth.application.dto.SendEmailRequestDto;
 import com.jinsungwon99.user.application.dto.FollowUserRequestDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,11 +20,10 @@ public class DataLoader {
     private EntityManager entityManager;
 
     public void loadData(){
-        CreateUserRequestDto dto = new CreateUserRequestDto("test user", "");
-        //테스트 API 호출
-        createUser(dto);
-        createUser(dto);
-        createUser(dto);
+        //user 1,2,3 생성
+        for(int i=1; i < 4; i++){
+            createUser("user" + i + "@test.com");
+        }
 
         followUser(new FollowUserRequestDto(1L, 2L));
         followUser(new FollowUserRequestDto(1L, 3L));
@@ -40,11 +42,19 @@ public class DataLoader {
             .setParameter("email",email)
             .getSingleResult();
     }
-
+    //중복 이메일 조회
     public Long getUserId(String email){
         return (Long) entityManager.createQuery("SELECT userId FROM UserAuthEntity WHERE email = :email", Long.class)
             .setParameter("email", email)
             .getSingleResult();
     }
-
+    
+    //회원가입
+    public void createUser(String email){
+        requestSendEmail(new SendEmailRequestDto(email));   //이메일 전송
+        String token = getEmailToken(email);    //토큰 가져오기
+        requestVerifyEmail(email,token);    //이메일 인증
+        //회원가입
+        registerUser(new CreateUserAuthRequestDto(email,"password","USER","name",""));
+    }
 }

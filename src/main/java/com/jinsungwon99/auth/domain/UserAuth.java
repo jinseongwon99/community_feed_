@@ -18,7 +18,7 @@ public class UserAuth {
 
     public UserAuth(String email, String password, String userRole,Long userId){
         this.email = Email.createEmail(email);
-        this.password = Password.createEncryptPassword(password);
+        this.password = Password.getPassword(password);
         this.userRole = UserRole.valueOf(userRole);
         this.userId = userId;
     }
@@ -35,6 +35,8 @@ public class UserAuth {
         return userRole.name();
     }
 
-
+    public boolean matchPassword(String password){
+        return this.password.matchPassword(password);
+    }
 
 }
