@@ -9,6 +9,7 @@ import javax.swing.JWindow;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+// 토큰 생성, 조회
 @Component
 public class TokenProvider {
 

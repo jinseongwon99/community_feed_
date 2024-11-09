@@ -26,12 +26,13 @@ public class FeedAcceptanceSteps {
 
     }
     // feed 조회하기
-    public static List<GetPostContentResponseDto> requestFeed(Long requestUserId){
+    public static List<GetPostContentResponseDto> requestFeed(String token){
         return RestAssured
             .given().log().all()
+            .header("Authorization","Bearer " + token)
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .when()
-            .get("/feed/{userId}",requestUserId)
+            .get("/feed")
             .then().log().all()
             .extract()
             // Long 반환하기
@@ -39,6 +40,22 @@ public class FeedAcceptanceSteps {
             .getList("value",GetPostContentResponseDto.class);
 
     }
+    //Feed 조회 응답코드 조회
+    public static Integer requestFeedCode(String token){
+        return RestAssured
+            .given().log().all()
+            .header("Authorization","Bearer " + token)
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .when()
+            .get("/feed")
+            .then().log().all()
+            .extract()
+            // Long 반환하기
+            .jsonPath()
+            .get("code");
+
+    }
+    
 
 
 }

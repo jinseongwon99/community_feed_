@@ -2,6 +2,7 @@ package com.jinsungwon99.acceptance;
 
 import static com.jinsungwon99.acceptance.steps.FeedAcceptanceSteps.reqCreatePost;
 import static com.jinsungwon99.acceptance.steps.FeedAcceptanceSteps.requestFeed;
+import static com.jinsungwon99.acceptance.steps.FeedAcceptanceSteps.requestFeedCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.jinsungwon99.acceptance.utils.AcceptanceTestTemplate;
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.Test;
 @RequiredArgsConstructor
 class FeedAcceptanceTest extends AcceptanceTestTemplate {
 
-
+    private String token;
      /*
       *  User 1 --> follow --> User 2
       *
@@ -26,6 +27,7 @@ class FeedAcceptanceTest extends AcceptanceTestTemplate {
     @BeforeEach
      void setUp(){
         super.init();
+        this.token = login("user1@test.com");
     }
 
     /*
@@ -42,11 +44,23 @@ class FeedAcceptanceTest extends AcceptanceTestTemplate {
         Long createPostId= reqCreatePost(dto);
 
         //when
-        List<GetPostContentResponseDto> result = requestFeed(1L);
+        List<GetPostContentResponseDto> result = requestFeed(token);
 
         //then
         assertEquals(1,result.size());
         assertEquals(createPostId,result.get(0).getId());
 
+    }
+
+    @Test
+    void givenUserHasFollowerAndCreatePost_whenFollowerUserRequestFeedWithInvalidToken_thenFollowerCanGetPostFromFeed(){
+
+        //given
+        //when
+        Integer code = requestFeedCode("abcd");
+
+        //then
+        assertEquals(400,code);
+        
     }
 }
