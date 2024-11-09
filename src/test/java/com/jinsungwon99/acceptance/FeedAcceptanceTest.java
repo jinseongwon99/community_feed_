@@ -61,6 +61,5 @@ class FeedAcceptanceTest extends AcceptanceTestTemplate {
 
         //then
         assertEquals(400,code);
-        
     }
 }
