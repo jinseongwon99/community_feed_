@@ -5,6 +5,7 @@ import com.jinsungwon99.common.repository.entity.TimeBaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class UserAuthEntity extends TimeBaseEntity{
     private String password;
     private String userRole;
     private Long userId;
+    private LocalDateTime lastLoginDt;
 
     //userAuth -> Entity 변환
     public UserAuthEntity(UserAuth userAuth,Long userId){
@@ -35,4 +37,7 @@ public class UserAuthEntity extends TimeBaseEntity{
         return new UserAuth(email,password,userRole,userId);
     }
 
+    public void updateLastLoginAt(){
+        lastLoginDt = LocalDateTime.now();
+    }
 }

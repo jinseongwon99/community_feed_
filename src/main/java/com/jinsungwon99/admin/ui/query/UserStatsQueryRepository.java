@@ -1,6 +1,6 @@
 package com.jinsungwon99.admin.ui.query;
 
-import com.jinsungwon99.admin.ui.dto.GetDailyRegisterUserResponseDto;
+import com.jinsungwon99.admin.ui.dto.users.GetDailyRegisterUserResponseDto;
 import java.util.List;
 
 public interface UserStatsQueryRepository {

@@ -1,5 +1,9 @@
 package com.jinsungwon99.admin.ui;
 
+import com.jinsungwon99.admin.ui.dto.GetTableListResponse;
+import com.jinsungwon99.admin.ui.dto.users.GetUserTableRequestDto;
+import com.jinsungwon99.admin.ui.dto.users.GetUserTableResponseDto;
+import com.jinsungwon99.admin.ui.query.AdminTableQueryRepository;
 import com.jinsungwon99.admin.ui.query.UserStatsQueryRepository;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +18,27 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController {
 
     private final UserStatsQueryRepository userStatsQueryRepository;
+    private final AdminTableQueryRepository adminTableQueryRepository;
 
     @GetMapping("/index")
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         modelAndView.addObject("result",userStatsQueryRepository.getDailyRegisterUserStats(7));
+        return modelAndView;
+    }
+
+    @GetMapping("/users")
+    public ModelAndView users(GetUserTableRequestDto dto){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("users");  // users.html 파일 출력
+
+        GetTableListResponse<GetUserTableResponseDto> result = adminTableQueryRepository.getUserTableData(dto);
+        modelAndView.addObject("requestDto",dto);
+        modelAndView.addObject("userList",result.getTableData());
+        modelAndView.addObject("totalCount",result.getTotalCount());
+
         return modelAndView;
     }
 }

@@ -8,6 +8,7 @@ import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -30,6 +31,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
     
     //로그인
     @Override
+    @Transactional
     public UserAuth loginUser(String email, String password) {
         UserAuthEntity userAuthEntity = jpaUserAuthRepository.findById(email).orElseThrow();
         UserAuth userAuth = userAuthEntity.toUserAuth();
@@ -37,6 +39,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
         if(!userAuth.matchPassword(password)){
             throw new IllegalArgumentException("옳지 않은 비밀번호 입니다");
         }
+        userAuthEntity.updateLastLoginAt();
         return userAuth;
     }
 }

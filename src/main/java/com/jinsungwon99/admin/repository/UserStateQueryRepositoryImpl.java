@@ -1,16 +1,12 @@
 package com.jinsungwon99.admin.repository;
 
-import static com.jinsungwon99.common.TimeCalculator.getDateDaysAgo;
+import static com.jinsungwon99.common.utils.TimeCalculator.getDateDaysAgo;
 
-import com.jinsungwon99.admin.ui.dto.GetDailyRegisterUserResponseDto;
+import com.jinsungwon99.admin.ui.dto.users.GetDailyRegisterUserResponseDto;
 import com.jinsungwon99.admin.ui.query.UserStatsQueryRepository;
 import com.jinsungwon99.user.repository.entity.QUserEntity;
-import com.mysql.cj.x.protobuf.MysqlxCrud.Projection;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

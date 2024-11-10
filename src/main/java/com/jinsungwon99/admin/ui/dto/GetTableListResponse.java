@@ -1,6 +1,6 @@
 package com.jinsungwon99.admin.ui.dto;
 
-import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetDailyRegisterUserResponseDto {
+public class GetTableListResponse <T>{
 
-    private LocalDate date;
-    private Long count;
+    private int totalCount;
+    private List<T> tableData;
 }
