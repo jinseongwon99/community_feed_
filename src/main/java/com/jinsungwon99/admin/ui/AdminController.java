@@ -1,6 +1,8 @@
 package com.jinsungwon99.admin.ui;
 
 import com.jinsungwon99.admin.ui.dto.GetTableListResponse;
+import com.jinsungwon99.admin.ui.dto.posts.GetPostTableRequestDto;
+import com.jinsungwon99.admin.ui.dto.posts.GetPostTableResponseDto;
 import com.jinsungwon99.admin.ui.dto.users.GetUserTableRequestDto;
 import com.jinsungwon99.admin.ui.dto.users.GetUserTableResponseDto;
 import com.jinsungwon99.admin.ui.query.AdminTableQueryRepository;
@@ -30,6 +32,11 @@ public class AdminController {
 
     @GetMapping("/users")
     public ModelAndView users(GetUserTableRequestDto dto){
+
+        if(dto.getName() == null){
+            dto.setName("");
+        }
+
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("users");  // users.html 파일 출력
@@ -40,5 +47,21 @@ public class AdminController {
         modelAndView.addObject("totalCount",result.getTotalCount());
 
         return modelAndView;
+    }
+
+    @GetMapping("/posts")
+    private ModelAndView posts(GetPostTableRequestDto dto){
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("posts");
+
+        GetTableListResponse<GetPostTableResponseDto> result = adminTableQueryRepository.getPostTableData(dto);
+        modelAndView.addObject("postList",result.getTableData());
+        modelAndView.addObject("requestDto",dto);
+        modelAndView.addObject("totalCount",result.getTotalCount());
+
+        return modelAndView;
+
     }
 }
