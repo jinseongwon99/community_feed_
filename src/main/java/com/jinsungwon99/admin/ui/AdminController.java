@@ -7,7 +7,6 @@ import com.jinsungwon99.admin.ui.dto.users.GetUserTableRequestDto;
 import com.jinsungwon99.admin.ui.dto.users.GetUserTableResponseDto;
 import com.jinsungwon99.admin.ui.query.AdminTableQueryRepository;
 import com.jinsungwon99.admin.ui.query.UserStatsQueryRepository;
-import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +49,7 @@ public class AdminController {
     }
 
     @GetMapping("/posts")
-    private ModelAndView posts(GetPostTableRequestDto dto){
+    public ModelAndView posts(GetPostTableRequestDto dto){
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -63,5 +62,15 @@ public class AdminController {
 
         return modelAndView;
 
+    }
+
+    @GetMapping("/login")
+    public ModelAndView login(){
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("login");
+
+        return modelAndView;
     }
 }

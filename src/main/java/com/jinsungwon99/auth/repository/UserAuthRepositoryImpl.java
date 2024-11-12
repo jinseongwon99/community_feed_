@@ -35,6 +35,8 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
     public UserAuth loginUser(String email, String password) {
         UserAuthEntity userAuthEntity = jpaUserAuthRepository.findById(email).orElseThrow();
         UserAuth userAuth = userAuthEntity.toUserAuth();
+        UserAuth userAuth1 = new UserAuth(email, password, "USER");
+        System.out.println(userAuth1.getPasswordText());
 
         if(!userAuth.matchPassword(password)){
             throw new IllegalArgumentException("옳지 않은 비밀번호 입니다");

@@ -19,8 +19,8 @@ public class LoginController {
 
     @PostMapping
     public Response<UserAccessTokenResponseDto> login(@RequestBody LoginRequestDto dto){
+        System.out.println("==========="+dto.fcmToken());
         return Response.ok(authService.login(dto));
     }
-
 
 }

@@ -10,6 +10,8 @@ import com.jinsungwon99.auth.application.dto.LoginRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+
 public class LoginAcceptanceTest extends AcceptanceTestTemplate {
 
     private final String email = "email@gmail.com";
@@ -24,7 +26,7 @@ public class LoginAcceptanceTest extends AcceptanceTestTemplate {
     void givenEmailAndPassword_whenLogin_thenReturnToken(){
 
         //given
-        LoginRequestDto dto = new LoginRequestDto(email,"password");
+        LoginRequestDto dto = new LoginRequestDto(email,"password","fcmToken");
 
         //when
         String token = requestLoginGetToken(dto);
@@ -37,7 +39,7 @@ public class LoginAcceptanceTest extends AcceptanceTestTemplate {
     void givenEmailAndWrongPassword_whenLogin_thenReturnCodeNotZero(){
 
         //given
-        LoginRequestDto dto = new LoginRequestDto(email,"Wrong password");
+        LoginRequestDto dto = new LoginRequestDto(email,"Wrong password","fcmToken");
 
         //when
         Integer code = requestLoginGetResponseCode(dto);

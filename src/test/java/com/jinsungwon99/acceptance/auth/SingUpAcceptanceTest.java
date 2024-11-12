@@ -14,6 +14,7 @@ import com.jinsungwon99.auth.application.dto.SendEmailRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 public class SingUpAcceptanceTest extends AcceptanceTestTemplate {
 
     private final String email ="email@email.com";
