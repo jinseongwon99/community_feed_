@@ -1,5 +1,6 @@
 package com.jinsungwon99.post.ui;
 
+import com.jinsungwon99.common.idempotency.Idempotent;
 import com.jinsungwon99.common.ui.Response;
 import com.jinsungwon99.post.application.PostService;
 import com.jinsungwon99.post.application.dto.CreatePostRequestDto;
@@ -34,7 +35,7 @@ public class PostController {
         Post post = postService.updatePost(postId,dto);
         return Response.ok(post.getId());
     }
-
+    @Idempotent
     @GetMapping("/like/{postId}/{userId}")
     public Response<Void> postLike(@PathVariable(name = "postId") Long postId,
         @PathVariable(name = "userId") Long userId){
