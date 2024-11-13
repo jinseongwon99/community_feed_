@@ -305,6 +305,7 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 ### Installation
 1. application.yml 코드 추가 (DB 연결, JPA, secret-key, Firebase 인증서 파일 (json 파일) 읽어오기)
 2. /resources/community-service-adminsdk.json 파일 추가 (Firebase 인증서 파일(json))
+3. /resources/templates/login.html 에 vapidKey 코드 변경, const firebaseConfig 안의 코드 변경
 ```
 $ git clone https://github.com/MyNameSieun/OH-YO.git
 $ cd OH-YO
