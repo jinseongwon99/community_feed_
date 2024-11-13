@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
-
     private final JpaUserListQueryRepository jpaUserListQueryRepository;
 
     @PostMapping
@@ -47,6 +46,5 @@ public class UserController {
     public Response<GetUserResponseDto> getUserProfile(@PathVariable(name = "userId") Long userId){
         GetUserResponseDto response= userService.getUserProfile(userId);
         return Response.ok(response);
-
     }
 }
