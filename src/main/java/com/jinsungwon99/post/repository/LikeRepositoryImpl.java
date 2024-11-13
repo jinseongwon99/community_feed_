@@ -1,5 +1,7 @@
 package com.jinsungwon99.post.repository;
 
+import com.jinsungwon99.message.application.interfaces.MessageRepository;
+import com.jinsungwon99.message.repository.JpaFcmTokenRepository;
 import com.jinsungwon99.post.application.Interfaces.LikeCommentRepository;
 import com.jinsungwon99.post.application.Interfaces.LikePostRepository;
 import com.jinsungwon99.post.application.Interfaces.PostRepository;
@@ -28,7 +30,7 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
   private final JpaLikeRepository jpaLikeRepository;
   private final JpaPostRepository jpaPostRepository;
   private final JpaCommentRepository jpaCommentRepository;
-
+  private final MessageRepository messageRepository;
     @Override
     public boolean checkLike(User user, Comment comment) {
         LikeEntity likeEntity = new LikeEntity(comment,user);
@@ -42,8 +44,12 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
         LikeEntity likeEntity = new LikeEntity(comment,user);
 
         entityManager.persist(likeEntity);
+
         //commentEntity LikeCount 증가
         jpaCommentRepository.updateLikeCommentEntity(comment.getId(), 1);
+
+        //좋아요 알림 메시지 보내기
+        messageRepository.sendLikeMessage(user,comment.getAuthor());
 
     }
 
@@ -53,6 +59,7 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
        LikeEntity likeEntity = new LikeEntity(comment,user);
 
         jpaLikeRepository.deleteById(likeEntity.getId());
+
         //commentEntity LikeCount 감소
         jpaCommentRepository.updateLikeCommentEntity(comment.getId(), -1);
     }
@@ -71,8 +78,12 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
         //select 하지 않고 EntityManager 에 저장
         // = jpaLikeRepository.save(likeEntity); => select 로 조회 후 저장할 값 merge
         entityManager.persist(likeEntity);
+
         //postEntity LikeCount 증가
         jpaPostRepository.updateLikePostEntity(post.getId(), 1);
+        
+        //좋아요 알림 메시지 보내기
+        messageRepository.sendLikeMessage(user,post.getAuthor());
     }
 
     @Override
@@ -81,6 +92,7 @@ public class LikeRepositoryImpl implements LikeCommentRepository, LikePostReposi
         LikeEntity likeEntity = new LikeEntity(post,user);
 
         jpaLikeRepository.deleteById(likeEntity.getId());
+
         //postEntity LikeCount 감소
         jpaPostRepository.updateLikePostEntity(post.getId(), -1);
     }
