@@ -13,6 +13,7 @@ public interface JpaPostRepository extends JpaRepository<PostEntity,Long> {
         + " WHERE p.author.id = :authorId ")
     List<PostEntity> findFollowingPosts(Long authorId);
 
+    List<PostEntity> findAllByAuthorId(Long authorId);
 
     @Modifying
     @Query(value = "UPDATE PostEntity p "

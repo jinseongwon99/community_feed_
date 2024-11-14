@@ -28,4 +28,6 @@ public class UserRepositoryImpl implements UserRepository {
             .orElseThrow(IllegalArgumentException::new);
         return entity.toUser();
     }
+
+
 }

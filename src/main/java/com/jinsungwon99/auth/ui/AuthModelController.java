@@ -8,14 +8,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/model/user")
+@RequestMapping("/model/auth")
 public class AuthModelController {
 
     @GetMapping("/register")
     public ModelAndView registerForm(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("auth/signup");
-
         return modelAndView;
     }
 
@@ -23,7 +22,6 @@ public class AuthModelController {
     public ModelAndView loginForm(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("auth/signin");
-
         return modelAndView;
     }
 }
