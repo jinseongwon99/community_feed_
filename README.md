@@ -33,7 +33,7 @@
 
 <a href="https://marmalade-canvas-697.notion.site/SNS-137bf0ca6d808015bc11f034aa36b300">![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)</a>
 
-프로젝트에 대한 전반적인 소개를 여기에 적어주세요.
+
 
 <br>
 
