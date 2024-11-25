@@ -5,6 +5,7 @@ import com.jinsungwon99.common.principal.UserPrincipal;
 import com.jinsungwon99.common.ui.Response;
 import com.jinsungwon99.post.application.PostService;
 import com.jinsungwon99.post.domain.Post;
+import com.jinsungwon99.user.application.UserRelationService;
 import com.jinsungwon99.user.application.UserService;
 import com.jinsungwon99.user.application.dto.CreateUserRequestDto;
 import com.jinsungwon99.user.application.dto.GetUserListResponseDto;
@@ -23,49 +24,68 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor //생성자
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    private final JpaUserListQueryRepository jpaUserListQueryRepository;
     private final PostService postService;
+    private final UserRelationService userRelationService;
+    private final JpaUserListQueryRepository jpaUserListQueryRepository;
 
-    @PostMapping
-    public Response<Long> createUser(@RequestBody CreateUserRequestDto dto){
-        User user = userService.createUser(dto);
-        return Response.ok(user.getId());
-    }
+//    @PostMapping
+//    public Response<Long> createUser(@RequestBody CreateUserRequestDto dto) {
+//        User user = userService.createUser(dto);
+//
+//        return Response.ok(user.getId());
+//    }
 
-    @GetMapping("{userId}/follower")
-    public Response<List<GetUserListResponseDto>> gerFollowerList(@PathVariable(name= "userId") Long userId){
+    @GetMapping("/{userId}/follower")
+    public Response<List<GetUserListResponseDto>> getFollowerList(@PathVariable(name = "userId") Long userId) {
         List<GetUserListResponseDto> userList = jpaUserListQueryRepository.getFollowerUserList(userId);
         return Response.ok(userList);
     }
 
-    @GetMapping("{userId}/following")
-    public Response<List<GetUserListResponseDto>> gerFollowingList(@PathVariable(name= "userId") Long userId){
+    @GetMapping("/{userId}/following")
+    public Response<List<GetUserListResponseDto>> getFollowingList(@PathVariable(name = "userId") Long userId) {
         List<GetUserListResponseDto> userList = jpaUserListQueryRepository.getFollowingUserList(userId);
         return Response.ok(userList);
     }
 
-    @GetMapping("{userId}")
-    public Response<GetUserResponseDto> getUserProfile(@PathVariable(name = "userId") Long userId){
-        GetUserResponseDto response= userService.getUserProfile(userId);
+    @GetMapping("/{userId}")
+    public Response<GetUserResponseDto> getUserProfile(@PathVariable(name = "userId") Long userId) {
+        GetUserResponseDto response = userService.getUserProfile(userId);
         return Response.ok(response);
     }
 
-    @GetMapping("/getProfile")
-    public Response<GetProfileResponseDto> profile(@AuthPrincipal UserPrincipal userPrincipal) {
+    /*
+        내 프로필 조회
+     */
+    @GetMapping("/getProfile/{otherUserId}")
+    public Response<GetProfileResponseDto> profile(@AuthPrincipal UserPrincipal userPrincipal,
+        @PathVariable(name = "otherUserId") Long otherUserId) {
 
+        // 내 userId 불러오기
         Long userId = userPrincipal.getUserId();
 
-        // 내가 작성한 포스트 가져오기
-        List<Post> postList = postService.getMyPostList(userId);
+        // otherUserId가 null 이거나 0이면, 현재 로그인한 사용자(userId)의 프로필로 처리
+        if (otherUserId == null || otherUserId == 0L) {
+            otherUserId = userId;
+        }
 
-        // 내 프로필 정보 가져오기
-        GetUserResponseDto profile = userService.getUserProfile(userId);
+        // 구독 여부 확인
+        boolean isFollowing = false;
 
-        GetProfileResponseDto result = new GetProfileResponseDto(postList, profile);
+        if (!otherUserId.equals(userId)) {
+            isFollowing = userRelationService.isAlreadyFollow(userId, otherUserId);
+        }
+
+        // 해당 계정의 포스트 가져오기
+        List<Post> postList = postService.getMyPostList(otherUserId);
+
+        // 해당 계정의 프로필 정보 가져오기
+        GetUserResponseDto profile = userService.getUserProfile(otherUserId);
+
+        GetProfileResponseDto result = new GetProfileResponseDto(userId, otherUserId, postList, profile, isFollowing);
 
         return Response.ok(result);
     }
@@ -77,4 +97,5 @@ public class UserController {
 
         return Response.ok(userId);
     }
+
 }

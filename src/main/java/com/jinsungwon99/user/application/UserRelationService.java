@@ -17,27 +17,39 @@ public class UserRelationService {
         this.userRelationRepository = userRelationRepository;
     }
 
-    public void follow(FollowUserRequestDto dto){
+    public void follow(FollowUserRequestDto dto) {
         User user = userService.getUser(dto.userId());
         User targetUser = userService.getUser(dto.targetUserId());
 
-        if(userRelationRepository.isAlreadyFollow(user,targetUser)){
+        if (userRelationRepository.isAlreadyFollow(user, targetUser)) {
             throw new IllegalArgumentException();
         }
 
         user.follow(targetUser);
-        userRelationRepository.save(user,targetUser);
+        userRelationRepository.save(user, targetUser);
     }
 
-    public void unfollow(FollowUserRequestDto dto){
+    public void unFollow(FollowUserRequestDto dto) {
         User user = userService.getUser(dto.userId());
         User targetUser = userService.getUser(dto.targetUserId());
 
-        if(!userRelationRepository.isAlreadyFollow(user,targetUser)){
+        if (!userRelationRepository.isAlreadyFollow(user, targetUser)) {
             throw new IllegalArgumentException();
         }
 
         user.unfollow(targetUser);
-        userRelationRepository.delete(user,targetUser);
+        userRelationRepository.delete(user, targetUser);
     }
+
+    /*
+        구독 여부 확인
+     */
+    public boolean isAlreadyFollow(Long userId, Long targetUserId) {
+
+        User user = userService.getUser(userId);
+        User targetUser = userService.getUser(targetUserId);
+
+        return userRelationRepository.isAlreadyFollow(user, targetUser);
+    }
+
 }

@@ -61,10 +61,11 @@ public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepos
     }
 
     //피드 댓글 가져오기
-    public List<GetContentResponseDto> getCommentResponse(Long postId, Long lastCommentId,Long userId) {
+    public List<GetContentResponseDto> getCommentResponse(Long postId,Long userId,Long lastCommentId) {
+        System.out.println("Fetching comments for postId: " + postId + ", userId: " + userId + ", lastCommentId: " + lastCommentId);
         return queryFactory
             .select(
-                Projections.fields( //DTO에 맞춰ㅏ서 데이터 출력 명시
+                Projections.fields( //DTO에 맞춰서 데이터 출력 명시
                     GetContentResponseDto.class, //DTO
                     commentEntity.id.as("id"),     //DTO의 필드명에 맞추기 위해 as 지정(= id)
                     commentEntity.content.as("content"),
@@ -87,6 +88,7 @@ public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepos
             .orderBy(commentEntity.id.desc())
             .limit(20)
             .fetch();
+
     }
 
     private BooleanExpression hasLastData(Long lastId) {
@@ -109,8 +111,8 @@ public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepos
     }
 
     private BooleanExpression hasCommentLastData(Long lastId) {
-        if (lastId == null) {
-            return null;
+        if (lastId == null || lastId <= 0) {
+            return null;  // 처음부터 모든 댓글을 가져오도록 처리
         }
 
         return commentEntity.id.lt(lastId); //lastId보다 작을 때

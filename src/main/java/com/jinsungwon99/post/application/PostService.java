@@ -42,6 +42,7 @@ public class PostService {
         return postRepository.findAllByUserId(userId);
     }
 
+
     public Post createPost(CreatePostRequestDto requestDto) {
         // 이미지 파일 처리
         MultipartFile contentImageUrl = requestDto.contentImageUrl();

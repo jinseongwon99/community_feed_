@@ -7,6 +7,10 @@ import com.jinsungwon99.post.application.dto.CreatePostRequestDto;
 import com.jinsungwon99.post.application.dto.LikePostRequestDto;
 import com.jinsungwon99.post.application.dto.UpdatePostRequestDto;
 import com.jinsungwon99.post.domain.Post;
+import com.jinsungwon99.post.repository.post_queue.UserPostQueueQueryRepository;
+import com.jinsungwon99.post.ui.dto.GetContentResponseDto;
+import com.jinsungwon99.post.ui.dto.GetPostMainResponseDto;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     private final PostService postService;
+    private final UserPostQueueQueryRepository userPostQueueQueryRepository;
 
     @PostMapping
     public Response<Long> createPost(@ModelAttribute CreatePostRequestDto dto) {
@@ -51,6 +56,17 @@ public class PostController {
 
         postService.unlikePost(new LikePostRequestDto(userId,postId));
         return Response.ok(null);
+    }
+
+    @GetMapping("/getPost/{postId}")
+    public Response<GetPostMainResponseDto> post(@PathVariable(name = "postId") Long postId) {
+
+        Post post = postService.getPost(postId);
+        List<GetContentResponseDto> comment = userPostQueueQueryRepository.getCommentResponse(postId, post.getAuthorId(),0L);
+
+        GetPostMainResponseDto result = new GetPostMainResponseDto(post,comment);
+
+        return Response.ok(result);
     }
 
 
