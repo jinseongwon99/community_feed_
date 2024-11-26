@@ -36,8 +36,8 @@ public class PostRepositoryImpl implements PostRepository {
         return entity.toPost();
     }
     @Override
-    public List<Post> findAllByUserId(Long userId) {
-        List<PostEntity> postEntityList = jpaPostRepository.findAllByAuthorId(userId);
+    public List<Post> findAllByUserIdOrderByIdDesc(Long userId) {
+        List<PostEntity> postEntityList = jpaPostRepository.findAllByAuthorIdOrderByIdDesc(userId);
         return postEntityList.stream().map(PostEntity::toPost).toList();
     }
 }

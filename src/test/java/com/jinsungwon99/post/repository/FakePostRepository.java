@@ -3,8 +3,8 @@ package com.jinsungwon99.post.repository;
 import com.jinsungwon99.post.application.Interfaces.PostRepository;
 import com.jinsungwon99.post.domain.Post;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class FakePostRepository implements PostRepository {
 
@@ -25,5 +25,10 @@ public class FakePostRepository implements PostRepository {
     @Override
     public Post findById(Long id) {
         return store.get(id);
+    }
+
+    @Override
+    public List<Post> findAllByUserIdOrderByIdDesc(Long userId) {
+        return List.of();
     }
 }

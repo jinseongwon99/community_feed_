@@ -2,6 +2,7 @@ package com.jinsungwon99.post.ui;
 
 import com.jinsungwon99.post.application.PostService;
 import com.jinsungwon99.post.domain.Post;
+import com.jinsungwon99.post.repository.post_queue.UserPostQueueQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
