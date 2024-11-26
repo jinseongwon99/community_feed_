@@ -1,6 +1,8 @@
 package com.jinsungwon99.post.ui;
 
 import com.jinsungwon99.common.idempotency.Idempotent;
+import com.jinsungwon99.common.principal.AuthPrincipal;
+import com.jinsungwon99.common.principal.UserPrincipal;
 import com.jinsungwon99.common.ui.Response;
 import com.jinsungwon99.post.application.PostService;
 import com.jinsungwon99.post.application.dto.CreatePostRequestDto;
@@ -43,28 +45,32 @@ public class PostController {
     }
     @Idempotent
     @GetMapping("/like/{postId}/{userId}")
-    public Response<Void> postLike(@PathVariable(name = "postId") Long postId,
-        @PathVariable(name = "userId") Long userId){
+    public Response<Integer> postLike(@PathVariable(name = "postId") Long postId,
+        @PathVariable(name = "userId") Long userId) {
+        System.out.println("Attempting to like postId: " + postId + " by userId: " + userId);
+        int likeCount = postService.likePost(new LikePostRequestDto(userId, postId));
 
-        postService.likePost(new LikePostRequestDto(userId,postId));
-        return Response.ok(null);
+        return Response.ok(likeCount);
     }
 
+
     @GetMapping("/unlike/{postId}/{userId}")
-    public Response<Void> postUnLike(@PathVariable(name = "postId") Long postId,
+    public Response<Integer> postUnLike(@PathVariable(name = "postId") Long postId,
         @PathVariable(name = "userId") Long userId){
 
-        postService.unlikePost(new LikePostRequestDto(userId,postId));
+        int likeCount = postService.unlikePost(new LikePostRequestDto(userId,postId));
         return Response.ok(null);
     }
 
     @GetMapping("/getPost/{postId}")
-    public Response<GetPostMainResponseDto> post(@PathVariable(name = "postId") Long postId) {
+    public Response<GetPostMainResponseDto> post(@AuthPrincipal UserPrincipal userPrincipal,
+                                                 @PathVariable(name = "postId") Long postId) {
 
+        Long usrId = userPrincipal.getUserId();
         Post post = postService.getPost(postId);
         List<GetContentResponseDto> comment = userPostQueueQueryRepository.getCommentResponse(postId, post.getAuthorId(),0L);
 
-        GetPostMainResponseDto result = new GetPostMainResponseDto(post,comment);
+        GetPostMainResponseDto result = new GetPostMainResponseDto(post,comment,usrId,post.getAuthorId());
 
         return Response.ok(result);
     }

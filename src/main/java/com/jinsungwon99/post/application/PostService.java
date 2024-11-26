@@ -66,20 +66,22 @@ public class PostService {
     }
 
     @Transactional
-    public void likePost(LikePostRequestDto requestDto) {
+    public int likePost(LikePostRequestDto requestDto) {
         User user = userService.getUser(requestDto.userId());
         Post post = getPost(requestDto.postId());
 
         if (likePostRepository.checkLike(user, post)) {
-            return;
+            return post.getLikeCount();
         }
 
         post.like(user);
         likePostRepository.like(user, post);
+
+        return post.getLikeCount();
     }
 
     @Transactional
-    public void unlikePost(LikePostRequestDto requestDto) {
+    public int unlikePost(LikePostRequestDto requestDto) {
         User user = userService.getUser(requestDto.userId());
         Post post = getPost(requestDto.postId());
 
@@ -87,6 +89,8 @@ public class PostService {
             post.unlike();
             likePostRepository.unlike(user, post);
         }
+
+        return post.getLikeCount();
     }
 
     /*
