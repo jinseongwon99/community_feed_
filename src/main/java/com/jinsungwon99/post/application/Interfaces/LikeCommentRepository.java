@@ -1,6 +1,5 @@
 package com.jinsungwon99.post.application.Interfaces;
 
-import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.domain.comment.Comment;
 import com.jinsungwon99.user.domain.User;
 

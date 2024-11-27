@@ -1,15 +1,11 @@
 package com.jinsungwon99.post.repository;
 
 import com.jinsungwon99.message.application.interfaces.MessageRepository;
-import com.jinsungwon99.message.repository.JpaFcmTokenRepository;
 import com.jinsungwon99.post.application.Interfaces.LikeCommentRepository;
 import com.jinsungwon99.post.application.Interfaces.LikePostRepository;
-import com.jinsungwon99.post.application.Interfaces.PostRepository;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.domain.comment.Comment;
-import com.jinsungwon99.post.repository.entity.comment.CommentEntity;
 import com.jinsungwon99.post.repository.entity.like.LikeEntity;
-import com.jinsungwon99.post.repository.entity.post.PostEntity;
 import com.jinsungwon99.post.repository.jpa.JpaCommentRepository;
 import com.jinsungwon99.post.repository.jpa.JpaLikeRepository;
 import com.jinsungwon99.post.repository.jpa.JpaPostRepository;

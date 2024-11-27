@@ -140,4 +140,6 @@ public class PostService {
         String uniqueFileName = UUID.randomUUID().toString() + extension; // UUID로 고유 이름 생성
         return uniqueFileName;
     }
+
+
 }

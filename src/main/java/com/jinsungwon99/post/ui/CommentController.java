@@ -1,5 +1,7 @@
 package com.jinsungwon99.post.ui;
 
+import com.jinsungwon99.common.principal.AuthPrincipal;
+import com.jinsungwon99.common.principal.UserPrincipal;
 import com.jinsungwon99.common.ui.Response;
 import com.jinsungwon99.post.application.CommentService;
 import com.jinsungwon99.post.application.dto.CreateCommentRequestDto;
@@ -35,20 +37,20 @@ public class CommentController {
         return Response.ok(comment.getId());
     }
 
-    @GetMapping("/like/{commentId}/{userId}")
-    public Response<Void> commentLike(@PathVariable(name = "commentId") Long commentId,
-        @PathVariable(name = "userId") Long userId){
+    @GetMapping("/like/{commentId}")
+    public Response<Integer> commentLike(@PathVariable(name = "commentId") Long commentId,
+        @AuthPrincipal UserPrincipal userPrincipal){
 
-        commentService.likeComment(new LikeCommentRequestDto(userId,commentId));
-        return Response.ok(null);
+        int likeCount = commentService.likeComment(new LikeCommentRequestDto(userPrincipal.getUserId(),commentId));
+        return Response.ok(likeCount);
     }
 
-    @GetMapping("/unlike/{commentId}/{userId}")
-    public Response<Void> commentUnLike(@PathVariable(name = "commentId") Long commentId,
-        @PathVariable(name = "userId") Long userId){
+    @GetMapping("/unlike/{commentId}")
+    public Response<Integer> commentUnLike(@PathVariable(name = "commentId") Long commentId,
+        @AuthPrincipal UserPrincipal userPrincipal){
 
-        commentService.unlikeComment(new LikeCommentRequestDto(userId,commentId));
-        return Response.ok(null);
+        int likeCount = commentService.unlikeComment(new LikeCommentRequestDto(userPrincipal.getUserId(),commentId));
+        return Response.ok(likeCount);
     }
 
 }

@@ -51,24 +51,27 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public void likeComment(LikeCommentRequestDto requestDto){
+    public int likeComment(LikeCommentRequestDto requestDto){
         Comment comment = getComment(requestDto.commentId());
         User user = userService.getUser(requestDto.userId());
 
         if (likeCommentRepository.checkLike(user,comment)){
-            return;
+            return comment.getLikeCount();
         }
         comment.like(user);
         likeCommentRepository.like(user,comment);
+        return comment.getLikeCount();
     }
 
-    public void unlikeComment(LikeCommentRequestDto requestDto){
+    public int unlikeComment(LikeCommentRequestDto requestDto){
         Comment comment = getComment(requestDto.commentId());
         User user = userService.getUser(requestDto.userId());
 
         if (likeCommentRepository.checkLike(user,comment)){
             comment.unlike();
             likeCommentRepository.unlike(user,comment);
+            return comment.getLikeCount();
         }
+        return comment.getLikeCount();
     }
 }
