@@ -30,6 +30,7 @@ public class SignUpController {
     @PostMapping("/verify-token")
     public Response<Void> verifyEmail(@RequestBody VerifyEmailResponseDto dto) {
         emailService.verifyEmail(dto.getEmail(), dto.getToken());
+
         return Response.ok(null);
     }
 

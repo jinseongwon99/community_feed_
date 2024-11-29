@@ -45,7 +45,7 @@ public class EmailVerificationEntity extends TimeBaseEntity {
     }
 
     //동일 토큰 확인
-    public boolean hasSaveToken(String token){
+    public boolean hasSameToken(String token){
         return this.token.equals(token);
     }
 }
