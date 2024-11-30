@@ -43,6 +43,7 @@ public class PostService {
     }
 
 
+    @Transactional
     public Post createPost(CreatePostRequestDto requestDto) {
         // 이미지 파일 처리
         MultipartFile contentImageUrl = requestDto.contentImageUrl();
@@ -131,15 +132,10 @@ public class PostService {
         }
     }
 
-
-
-
     // 고유한 파일 이름 생성 (UUID 사용)
     private String generateUniqueFileName(String originalFileName) {
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String uniqueFileName = UUID.randomUUID().toString() + extension; // UUID로 고유 이름 생성
         return uniqueFileName;
     }
-
-
 }

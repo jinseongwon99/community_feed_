@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class UserModelController {
 
+    private final UserService userService;
+
     @GetMapping("/profile/{otherUserId}")
     public ModelAndView profile(@PathVariable(name = "otherUserId") Long otherUserId) {
         ModelAndView modelAndView = new ModelAndView();
@@ -29,6 +31,22 @@ public class UserModelController {
         modelAndView.setViewName("user/profile");
 
         modelAndView.addObject("otherUserId", 0L);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/profile/uploadData")
+    public ModelAndView uploadProfileData() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/profileUpdate");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/profile/uploadImage")
+    public ModelAndView uploadProfileImage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("image/upload");
 
         return modelAndView;
     }

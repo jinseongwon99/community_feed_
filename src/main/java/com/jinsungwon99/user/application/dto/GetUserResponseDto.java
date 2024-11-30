@@ -7,7 +7,7 @@ public record GetUserResponseDto(Long id, String name, String profileImageUrl, I
     //Record 생성자 작성법
     // ㄴ this(): = 괄호 안에 필드의 값들이 순서대로 들어감
     public GetUserResponseDto(User user){
-        this(user.getId(), user.getName(), user.getProfileImage(), user.getFollowingCount(),
+        this(user.getId(), user.getName(), user.getProfileImageUrl(), user.getFollowingCount(),
             user.getFollowerCount());
     }
 }

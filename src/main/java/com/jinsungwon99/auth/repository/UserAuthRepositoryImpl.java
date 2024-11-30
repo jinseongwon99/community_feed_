@@ -4,6 +4,8 @@ import com.jinsungwon99.auth.application.Interfaces.UserAuthRepository;
 import com.jinsungwon99.auth.domain.UserAuth;
 import com.jinsungwon99.auth.repository.entity.UserAuthEntity;
 import com.jinsungwon99.auth.repository.jpa.JpaUserAuthRepository;
+import com.jinsungwon99.common.domain.exception.ErrorCode;
+import com.jinsungwon99.common.ui.BaseException;
 import com.jinsungwon99.message.repository.JpaFcmTokenRepository;
 import com.jinsungwon99.message.repository.entity.FcmTokenEntity;
 import com.jinsungwon99.user.application.interfaces.UserRepository;
@@ -54,5 +56,22 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
         jpaFcmTokenRepository.save(new FcmTokenEntity(userAuth.getUserId(), fcmToken));
 
         return userAuth;
+    }
+
+    @Override
+    public UserAuth getAuth(Long userId) {
+        return jpaUserAuthRepository.findByUserId(userId)
+            .map(entity -> new UserAuth(entity.getEmail(), entity.getPassword(), entity.getUserRole(),
+                entity.getUserId()))
+            .orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND));
+    }
+
+    @Override
+    @Transactional
+    public void save(UserAuth userAuth) {
+
+        UserAuthEntity userAuthEntity = new UserAuthEntity(userAuth, userAuth.getUserId());
+
+        jpaUserAuthRepository.save(userAuthEntity);
     }
 }

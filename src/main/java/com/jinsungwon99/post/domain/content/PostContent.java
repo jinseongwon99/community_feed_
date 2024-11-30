@@ -1,26 +1,30 @@
 package com.jinsungwon99.post.domain.content;
 
+import com.jinsungwon99.common.domain.exception.ErrorCode;
+import com.jinsungwon99.common.ui.BaseException;
+
 public class PostContent extends Content {
 
-    private static final int Min_Post_Length = 5;
-    private static final int Max_Post_Length = 500;
+    private static final int MIN_POST_LENGTH = 5;
+    private static final int MAX_POST_LENGTH = 500;
 
     public PostContent(String content) {
-
         super(content);
     }
 
+
     @Override
     protected void checkText(String contentText) {
-        if(contentText == null || contentText.isEmpty()){
-            throw new IllegalArgumentException();
+        if (contentText == null || contentText.isEmpty()) {
+            throw new BaseException(ErrorCode.EMPTY_POST_CONTENT);
         }
-        if(contentText.length() < Min_Post_Length){
-            throw new IllegalArgumentException();
+
+        if (contentText.length() > MAX_POST_LENGTH) {
+            throw new BaseException(ErrorCode.BELOW_MIN_POST_LENGTH);
         }
-        if (contentText.length() > Max_Post_Length){
-            throw new IllegalArgumentException();
+
+        if (contentText.length() < MIN_POST_LENGTH) {
+            throw new BaseException(ErrorCode.EXCEEDED_MAX_POST_LENGTH);
         }
     }
-
 }

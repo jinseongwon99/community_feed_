@@ -14,4 +14,6 @@ import lombok.experimental.SuperBuilder;
 public class GetPostContentResponseDto extends GetContentResponseDto{
 
     private Integer commentCount;
+    private boolean likedByMe; // 사용자가 이 게시글을 좋아요했는지 여부
+    private String contentImageUrl; // 추가된 contentImageUrl 필드
 }

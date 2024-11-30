@@ -6,28 +6,29 @@ import com.jinsungwon99.user.repository.entity.UserEntity;
 import com.jinsungwon99.user.repository.jpa.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@RequiredArgsConstructor    //자동으로 생성자를 생성
-//Fake 객체를 이용해서 기능으로 구현을 했던 것과 동일
+@RequiredArgsConstructor  // 필요한 생성자만 자동 생성
 public class UserRepositoryImpl implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
 
     @Override
+    @Transactional
     public User save(User user) {
-        UserEntity entity = new UserEntity(user);
-        entity = jpaUserRepository.save(entity);
-        return entity.toUser();
+        UserEntity userEntity = new UserEntity(user);
+        userEntity = jpaUserRepository.save(userEntity);
+
+        return userEntity.toUser();
     }
 
     @Override
     public User findById(Long id) {
-        UserEntity entity = jpaUserRepository
+        UserEntity userEntity = jpaUserRepository
             .findById(id)
             .orElseThrow(IllegalArgumentException::new);
-        return entity.toUser();
+
+        return userEntity.toUser();
     }
-
-
 }

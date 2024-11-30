@@ -16,9 +16,8 @@ public class User {
     private final PositiveIntegerCounter followingCount;
     private final PositiveIntegerCounter followerCount;
 
-
     public User(Long id, UserInfo userInfo) {
-        if(userInfo == null){
+        if (userInfo == null) {
             throw new IllegalArgumentException();
         }
 
@@ -26,32 +25,39 @@ public class User {
         this.info = userInfo;
         this.followingCount = new PositiveIntegerCounter();
         this.followerCount = new PositiveIntegerCounter();
-
     }
 
-    public void follow(User tagetUser){
-        if(tagetUser.equals(this)){
+    public void follow(User targetUser) {
+        if (targetUser.equals(this)) {
             throw new IllegalArgumentException();
         }
+
         followingCount.increase();
-        tagetUser.increaseFollowerCount();
+        targetUser.increaseFollowerCount();
     }
 
-    public void unfollow(User tagetUser){
-        if(tagetUser.equals(this)){
+    public void changeName(String name) {
+        info.patchProfileName(name);
+    }
+
+    public void unfollow(User targetUser) {
+        if (targetUser.equals(this)) {
             throw new IllegalArgumentException();
         }
+
         followingCount.decrease();
-        tagetUser.decreaseFollowerCount();
+        targetUser.decreaseFollowerCount();
     }
-    private void increaseFollowerCount(){
+
+    private void increaseFollowerCount() {
         followerCount.increase();
     }
 
-    private void decreaseFollowerCount(){
+    private void decreaseFollowerCount() {
         followerCount.decrease();
     }
 
+    // 동일값 판단
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -77,12 +83,15 @@ public class User {
         return followingCount.getCount();
     }
 
-    public String getName(){
+    public String getName() {
         return info.getName();
     }
 
-    public String getProfileImage(){
-        return info.getProfileImage();
+    public String getProfileImageUrl() {
+        return info.getProfileImageUrl();
     }
 
+    public void patchProfileImageUrl(String imageUrl) {
+        this.info.patchProfileImageUrl(imageUrl);
+    }
 }

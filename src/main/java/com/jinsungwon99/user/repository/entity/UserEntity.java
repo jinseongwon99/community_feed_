@@ -43,7 +43,7 @@ public class UserEntity extends TimeBaseEntity {
     public  UserEntity(User user){
         this.id = user.getId();
         this.name = user.getName();
-        this.profileImageUrl = user.getProfileImage();
+        this.profileImageUrl = user.getProfileImageUrl();
         this.followerCount = user.getFollowerCount();
         this.followingCount = user.getFollowingCount();;
     }
