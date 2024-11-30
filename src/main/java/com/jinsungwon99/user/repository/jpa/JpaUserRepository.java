@@ -1,8 +1,12 @@
 package com.jinsungwon99.user.repository.jpa;
 
 import com.jinsungwon99.user.repository.entity.UserEntity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JpaUserRepository extends JpaRepository<UserEntity,Long> { //<가지고 와야할 Entity, 그 값의 Id>
+public interface JpaUserRepository extends JpaRepository<UserEntity, Long> {
+
+    // userId가 리스트에 포함된 모든 사용자 조회
+    List<UserEntity> findAllByIdIn(List<Long> ids);
 
 }

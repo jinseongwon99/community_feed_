@@ -3,7 +3,11 @@ package com.jinsungwon99.user.ui;
 import com.jinsungwon99.common.ui.Response;
 import com.jinsungwon99.user.application.UserRelationService;
 import com.jinsungwon99.user.application.dto.FollowUserRequestDto;
+import com.jinsungwon99.user.ui.dto.GetUserRelationListResponseDto;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +32,28 @@ public class UserRelationController {
         userRelationService.unFollow(dto);
 
         return Response.ok(null);
+    }
+
+    /*
+       팔로워 리스트 조회
+    */
+    @GetMapping("/getFollowerList/{targetUserId}")
+    public Response<List<GetUserRelationListResponseDto>> getFollowerList(@PathVariable Long targetUserId) {
+
+        List<GetUserRelationListResponseDto> result = userRelationService.getFollowerList(targetUserId);
+
+        return Response.ok(result);
+    }
+
+    /*
+       팔로잉 리스트 조회
+    */
+    @GetMapping("/getFollowingList/{targetUserId}")
+    public Response<List<GetUserRelationListResponseDto>> getFollowingList(@PathVariable Long targetUserId) {
+
+        List<GetUserRelationListResponseDto> result = userRelationService.getFollowingList(targetUserId);
+
+        return Response.ok(result);
     }
 
 }
