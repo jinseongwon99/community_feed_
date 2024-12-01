@@ -4,6 +4,7 @@ import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.repository.entity.UserEntity;
 import com.jinsungwon99.user.repository.jpa.JpaUserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +31,13 @@ public class UserRepositoryImpl implements UserRepository {
             .orElseThrow(IllegalArgumentException::new);
 
         return userEntity.toUser();
+    }
+
+    @Override
+    public List<User> findByNameContaining(String name) {
+        List<User> userList = jpaUserRepository.findByNameContaining(name).stream()
+            .map(UserEntity::toUser).toList();
+
+        return userList;
     }
 }

@@ -17,7 +17,7 @@ public class Post {
     private final Long id;
     private final User author;
     private final PostContent content;
-    private final String contentImageUrl;
+    private String contentImageUrl;
     private final PositiveIntegerCounter likeCount;
     private PostPublicationState state;
 
@@ -72,13 +72,20 @@ public class Post {
     public void unlike(){
         likeCount.decrease();
     }
-    public void updatePost(User user,String updateContent, PostPublicationState state){
-        if(!this.author.equals(user)){
-            throw new IllegalArgumentException();
+    public void updatePost(User user, String updateContent, PostPublicationState state, String imageUrl) {
+        if (!this.author.equals(user)) {
+            throw new IllegalArgumentException("Only the author can update the post.");
         }
         this.state = state;
         this.content.updateContent(updateContent);
+
+        // 이미지 URL이 변경된 경우, 이미지 URL을 업데이트
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            System.out.println("Updating image URL: " + imageUrl);
+            this.contentImageUrl = imageUrl;
+        }
     }
+
 
     public int getLikeCount() {
         return likeCount.getCount();

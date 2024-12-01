@@ -18,6 +18,7 @@ public interface JpaPostRepository extends JpaRepository<PostEntity,Long> {
     @Modifying
     @Query(value = "UPDATE PostEntity p "
         + "SET p.content = :#{#postEntity.getContent()}, "
+        + "p.contentImageUrl = :#{#postEntity.getContentImageUrl()}, "
         + "p.state = :#{#postEntity.getState()}, "
         + "p.updDt = now() "
         + "where p.id = :#{#postEntity.getId()}")
