@@ -51,6 +51,27 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    @Transactional
+    public void deleteComment(Long commentId, Long userId) {
+        // 게시글 조회
+        Comment comment = getComment(commentId);
+
+        // 작성자 확인
+        if (!comment.getAuthor().getId().equals(userId)) {
+            throw new IllegalArgumentException("작성자와 사용자가 다릅니다. 삭제할 수 없습니다.");
+        }
+
+        // 게시글 삭제
+        commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public void deleteAllByPostId(Long postId) {
+
+        // 게시글 삭제
+        commentRepository.deleteAllByPostId(postId);
+    }
+
     public int likeComment(LikeCommentRequestDto requestDto){
         Comment comment = getComment(requestDto.commentId());
         User user = userService.getUser(requestDto.userId());

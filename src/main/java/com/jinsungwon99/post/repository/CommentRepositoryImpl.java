@@ -4,6 +4,7 @@ import com.jinsungwon99.post.application.Interfaces.CommentRepository;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.domain.comment.Comment;
 import com.jinsungwon99.post.repository.entity.comment.CommentEntity;
+import com.jinsungwon99.post.repository.entity.post.PostEntity;
 import com.jinsungwon99.post.repository.jpa.JpaCommentRepository;
 import com.jinsungwon99.post.repository.jpa.JpaPostRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,4 +37,22 @@ public class CommentRepositoryImpl implements CommentRepository{
         return entity.toComment();
 
     }
+
+    @Override
+    public void delete(Comment comment) {
+
+        CommentEntity entity = new CommentEntity(comment);
+
+        jpaCommentRepository.delete(entity);
+
+    }
+
+    @Override
+    public void deleteAllByPostId(Long postId) {
+
+
+        jpaCommentRepository.deleteAllByPostId(postId);
+
+    }
+
 }

@@ -3,12 +3,7 @@ package com.jinsungwon99.post.repository.post_queue;
 import com.jinsungwon99.post.repository.entity.post.PostEntity;
 import com.jinsungwon99.post.repository.entity.post.UserPostQueueEntity;
 import com.jinsungwon99.post.repository.jpa.JpaUserPostQueueRepository;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -56,6 +51,14 @@ public class UserQueueRedisRepositoryImpl implements UserQueueRedisRepository {
     @Override
     public void deleteFeed(Long userId, Long targetUserId) {
         jpaUserPostQueueRepository.deleteAllByUserIdAndAuthorId(userId, targetUserId);
+    }
+
+
+    @Override
+    public void deletePostFromFollowingUserList(Long postId, List<Long> userIdList) {
+        for (Long userId : userIdList) {
+            jpaUserPostQueueRepository.deleteByUserIdAndPostId(userId, postId);
+        }
     }
 
 }

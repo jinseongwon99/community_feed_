@@ -15,5 +15,5 @@ public interface JpaCommentRepository extends JpaRepository<CommentEntity,Long> 
         + "where c.id = :commentId")
     void updateLikeCommentEntity(Long commentId, Integer likeCount);
 
-
+    void deleteAllByPostId(Long postId);
 }

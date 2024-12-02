@@ -40,4 +40,19 @@ public class PostRepositoryImpl implements PostRepository {
         List<PostEntity> postEntityList = jpaPostRepository.findAllByAuthorIdOrderByIdDesc(userId);
         return postEntityList.stream().map(PostEntity::toPost).toList();
     }
+
+    @Override
+    public void delete(Post post) {
+        // Post -> PostEntity 변환
+        PostEntity entity = new PostEntity(post);
+
+        // 데이터베이스에서 삭제
+        jpaPostRepository.delete(entity);
+
+        // 큐에서 관련 작업 처리 (옵션)
+        userPostQueueCommandRepository.deletePost(entity);
+
+        System.out.println("Post deleted: " + post.getId());
+    }
+
 }
