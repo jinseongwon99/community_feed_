@@ -17,6 +17,7 @@ import com.jinsungwon99.user.ui.dto.PatchPasswordRequestDto;
 import com.jinsungwon99.user.ui.dto.PatchProfileImageRequestDto;
 import com.jinsungwon99.user.ui.dto.PatchProfileRequestDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -80,17 +81,15 @@ public class UserController {
     public Response<GetProfileResponseDto> profile(@AuthPrincipal UserPrincipal userPrincipal,
         @PathVariable(name = "otherUserId") Long otherUserId) {
 
-        // 내 userId 불러오기
         Long userId = userPrincipal.getUserId();
 
-        // otherUserId가 null 이거나 0이면, 현재 로그인한 사용자(userId)의 프로필로 처리
+        // otherUserId가 null이거나 0이면 현재 로그인한 사용자(userId)의 프로필을 가져옴
         if (otherUserId == null || otherUserId == 0L) {
             otherUserId = userId;
         }
 
         // 구독 여부 확인
         boolean isFollowing = false;
-
         if (!otherUserId.equals(userId)) {
             isFollowing = userRelationService.isAlreadyFollow(userId, otherUserId);
         }
@@ -98,13 +97,24 @@ public class UserController {
         // 해당 계정의 포스트 가져오기
         List<Post> postList = postService.getMyPostList(otherUserId);
 
+        // 구독을 하지 않았다면 공개된 게시글만 필터링
+        List<Post> filteredPostList;
+        if (isFollowing) {
+            filteredPostList = postList; // 구독한 경우, 모든 포스트를 출력
+        } else {
+            filteredPostList = postList.stream()
+                .filter(Post::isPublic) // 공개 게시글만 필터링
+                .collect(Collectors.toList());
+        }
+
         // 해당 계정의 프로필 정보 가져오기
         GetUserResponseDto profile = userService.getUserProfile(otherUserId);
 
-        GetProfileResponseDto result = new GetProfileResponseDto(userId, otherUserId, postList, profile, isFollowing);
-
+        // 결과 반환
+        GetProfileResponseDto result = new GetProfileResponseDto(userId, otherUserId, filteredPostList, profile, isFollowing);
         return Response.ok(result);
     }
+
 
     @GetMapping("/getUserId")
     public Response<Long> getUserId(@AuthPrincipal UserPrincipal userPrincipal) {
