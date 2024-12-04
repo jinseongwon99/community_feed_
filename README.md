@@ -193,28 +193,87 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 
 | 로그인 화면                                          
 | ------------------------------------------------- |
-| ![login](https://github.com/user-attachments/assets/775d66d3-fef9-420e-bb96-e114b30cb111) 
+| ![image](https://github.com/user-attachments/assets/15a00db6-8b18-4836-8fc3-e1826e290695)
+ 
 
 | 회원가입 화면                                          
 | ------------------------------------------------- |
-| ![login](https://github.com/user-attachments/assets/775d66d3-fef9-420e-bb96-e114b30cb111) 
+| ![image](https://github.com/user-attachments/assets/973b6e48-daa9-4a3c-8844-011dc541fffd)
 
-| 마이페이지 화면                                          
-| ------------------------------------------------- |
-| ![login](https://github.com/user-attachments/assets/775d66d3-fef9-420e-bb96-e114b30cb111) 
 
 
 ### 2) 게시글
 
-| 상세페이지 화면                                   | 
+| 피드 화면                                 
 | ------------------------------------------------- |
-| <img src="" alt="-화면" width="150" height="200"> | 
+| ![image](https://github.com/user-attachments/assets/49fb0dd0-dcc9-4af5-a836-6d5bb3fe7fc3)
 
-### 3) 404 & 로딩 화면
 
-| - 화면                                            |
+
+| 게시글 화면                                      
 | ------------------------------------------------- |
-| <img src="" alt="-화면" width="288" height="608"> |
+| ![image](https://github.com/user-attachments/assets/e0950377-78b8-4a54-a9c5-a553884057d3)
+
+
+
+| 게시글 등록 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/8454cb21-c3ef-4369-8b8c-40f15d17a2aa)
+
+
+
+| 게시글 수정 화면                                      
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/e8a9918d-3161-4343-a2bc-363613552681)
+
+
+
+### 3) 마이페이지
+
+| 프로필 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/38777413-858c-452d-a256-c55ded9828db)
+
+
+
+| 팔로잉,팔로우 조회 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/7279f975-4e51-413c-bbf0-bdc016e4eb21)
+
+
+
+| 상대방 프로필 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/eba74235-1625-4394-93ca-db08ff18a180)
+ 
+
+
+| 프로필 등록 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/b30fa430-4ced-48d6-888f-cb837533ecd8)
+ 
+
+
+| 개인정보 수정 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/63714cf0-5259-49a8-be5b-c0ad9d36c23f)
+ 
+
+
+### 4) etc
+
+| 검색 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/bc6a2902-fe0d-49b7-8f93-e464082db8b0)
+
+
+
+| 알림 조회 화면                                    
+| ------------------------------------------------- |
+| ![image](https://github.com/user-attachments/assets/1ef08794-e239-4f81-8bdd-9ec4dc382d04)
+
+
+
 
 <br>
 
