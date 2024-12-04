@@ -4,7 +4,7 @@ import com.jinsungwon99.common.domain.exception.ErrorCode;
 import com.jinsungwon99.common.repository.NotificationRepository;
 import com.jinsungwon99.common.repository.entity.NotificationEntity;
 import com.jinsungwon99.common.ui.BaseException;
-import com.jinsungwon99.common.ui.dto.PostSaveNotificationRequestDto;
+import com.jinsungwon99.common.ui.dto.SaveNotificationRequestDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class NotificationService {
 
     // 알림 저장
     @Transactional
-    public void saveNotification(PostSaveNotificationRequestDto dto) {
+    public void saveNotification(SaveNotificationRequestDto dto) {
         NotificationEntity entity = new NotificationEntity(dto.userId(), dto.body(), dto.contentUrl(), false);
         notificationRepository.save(entity);
     }
@@ -51,3 +51,4 @@ public class NotificationService {
     }
 
 }
+

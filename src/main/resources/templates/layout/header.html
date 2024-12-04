@@ -1,75 +1,928 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="headerFragment">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photogram</title>
+    <title>PostMain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
 
-    <!-- 제이쿼리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        .story-list__item {
+            background: #fff;
+            border: 1px solid #ddd;
+            margin: 20px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 600px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-    <!-- Style -->
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/story.css}">
-    <link rel="stylesheet" th:href="@{/css/popular.css}">
-    <link rel="stylesheet" th:href="@{/css/profile.css}">
-    <link rel="stylesheet" th:href="@{/css/upload.css}">
-    <link rel="stylesheet" th:href="@{/css/update.css}">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <!-- <link th:rel="shortcut icon" href="/images/insta.svg"> -->
+        .sl__item__header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
 
-    <!-- js -->
-    <script src="/js/header.js" defer></script>
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
 
-    <!-- Fontawesome -->
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css}" />
-    <!-- Fonts -->
-    <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap}" rel="stylesheet">
+        .sl__item__img img {
+            width: 100%;
+            display: block;
+        }
+
+        .sl__item__contents {
+            padding: 10px;
+        }
+
+        .sl__item__contents__icon {
+            display: flex;
+            align-items: center;
+        }
+
+        .sl__item__contents__icon button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sl__item__contents__content {
+            margin-top: 10px;
+        }
+
+        .sl__item__contents__comment {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .sl__item__input {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .sl__item__input input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 5px 10px;
+            outline: none;
+        }
+
+        .sl__item__input button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .sl__item__input button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 팝업 전체 스타일 */
+    .popup {
+      display: none; /* 기본적으로 숨김 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000; /* 팝업이 다른 요소 위에 오도록 */
+    }
+
+
+    .popup-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px; /* 팝업의 너비 */
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      margin-top: 176px;
+
+    }
+
+    /* 팝업 버튼 스타일 */
+    .popup-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    /* 버튼 hover 스타일 */
+    .popup-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* 팝업 외부 클릭 시 닫기 처리 (배경 클릭 시 닫히지 않게 설정) */
+    .popup {
+      pointer-events: all; /* 팝업 내부 요소와 클릭 가능하게 */
+    }
+
+    /* 팝업 외부 영역 클릭 시 팝업이 닫히지 않도록 막기 */
+    .popup-content {
+      pointer-events: all;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+        /* 수정 모달 스타일 */
+    #editModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .editModal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 50%;  /* 너비 조정 */
+      max-width: 600px;  /* 최대 너비 설정 */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .editModal-content input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .editModal-content button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .editModal-content button:hover {
+      background-color: #0056b3;
+    }
+
+    #postUserName a {
+      text-decoration: none; /* 링크 밑줄 제거 */
+      color: #3498db; /* 파란색 텍스트 */
+      font-weight: bold; /* 글씨 굵게 */
+      font-size: 16px; /* 글씨 크기 */
+      transition: color 0.3s ease; /* 색상 변화에 부드러운 애니메이션 추가 */
+    }
+
+    #postUserName a:hover {
+      color: #1abc9c; /* 마우스 올렸을 때 색상 변화 */
+      text-decoration: underline; /* 호버 시 밑줄 추가 */
+    }
+
+
+    </style>
 </head>
+<script>
+    let globalUserId = null; // 전역 변수 선언 (userId 저장)
+   let postData = null;
 
+  document.addEventListener('DOMContentLoaded', function () {
+     const pathname = window.location.pathname; // URL 경로 가져오기
+     const pathParts = pathname.split('/'); // '/'를 기준으로 분리
+     const postId = pathParts[pathParts.length - 1]; // 마지막 부분이 'postId'
+
+     if (postId) {
+       const token = localStorage.getItem('accessToken'); // 로그인 토큰 가져오기
+       if (token) {
+         console.log("Sending request to get post details for postId:", postId);
+
+         fetch(`/post/getPost/${postId}`, {
+           method: 'GET',
+           headers: {
+             'Authorization': `Bearer ${token}`
+           }
+         })
+         .then(response => {
+           if (!response.ok) {
+             return response.json().then(data => {
+                  alert(data.message);  // 오류 메시지 출력
+                  window.history.back();  // 이전 페이지로 이동
+             });
+           }
+           return response.json();
+         })
+         .then(data => {
+           console.log('Post Data:', data);
+
+           const postData = data.value; // postData에 서버에서 받은 데이터 할당
+           const post = postData.post;
+           const comments = postData.comment;
+           const isLiked = postData.liked; // 좋아요 상태
+           const globalUserId = postData.userId; // 전역 변수에 userId 저장
+           const authorId = post.author?.id; // 게시물 작성자 ID
+
+           // 게시물 내용 렌더링
+           const postContent = post.content || '게시물 내용 없음';
+           const postImageUrl = post.contentImageUrl ? `/uploads/images/${post.contentImageUrl}` : '/images/default-post-image.jpg';
+           const userName = post.author?.info?.name || '사용자 이름';
+           const userProfileImage = post.author?.info?.profileImage || '/images/person.jpeg';
+           const likeCount = post.likeCount || 0;
+
+           // HTML 업데이트
+           document.getElementById('postUserName').innerHTML = `
+             <a href="/model/user/profile/${authorId}" style="text-decoration: none; color: #3498db; font-weight: bold; font-size: 16px;">
+               ${userName}
+             </a>
+           `;
+           document.getElementById('postUserProfileImage').outerHTML = `
+             <a href="/model/user/profile/${authorId}">
+               <img src="${userProfileImage}" alt="User Profile" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #3498db;">
+             </a>
+           `;
+           document.getElementById('postImage').src = postImageUrl;
+           document.getElementById('postContent').innerText = postContent;
+           document.getElementById('storyLikeCount').innerText = likeCount;
+
+           // 좋아요 상태 업데이트
+           const likeIcon = document.getElementById('storyLikeIcon');
+           if (isLiked) {
+             likeIcon.style.color = 'red'; // 좋아요 한 상태
+           } else {
+             likeIcon.style.color = 'black'; // 좋아요 하지 않은 상태
+           }
+
+           // 좋아요/싫어요 버튼 비활성화 (작성자와 동일한 사용자일 경우)
+           if (globalUserId === authorId) {
+             likeIcon.style.pointerEvents = 'none'; // 클릭 방지
+             likeIcon.style.color = 'gray'; // 색상 변경 (비활성화 표시)
+           }
+
+           if (globalUserId === authorId) {
+             // 더보기 버튼 추가
+             const moreOptionsButton = document.createElement('button');
+             moreOptionsButton.setAttribute('onclick', 'showPopup()');
+             moreOptionsButton.setAttribute('style', 'border: none; background: none; cursor: pointer;');
+             moreOptionsButton.innerHTML = `<i class="fas fa-ellipsis-h"></i>`; // 더보기 아이콘
+
+             // 버튼을 원하는 위치에 추가
+             const postContainer = document.getElementById('postContainer'); // 버튼을 넣을 부모 요소 ID
+             if (postContainer) {
+               postContainer.appendChild(moreOptionsButton);
+             }
+           }
+
+           // 댓글 렌더링
+           const commentList = document.getElementById('storyCommentList');
+           commentList.innerHTML = ''; // 기존 댓글 제거
+
+           // 댓글 렌더링 수정
+           comments.forEach(commentItem => {
+             if (commentItem && commentItem.likeCount !== undefined) {
+               const commentElement = document.createElement('div');
+               commentElement.classList.add('sl__item__contents__comment');
+
+               // 기본 댓글 HTML 구조 생성
+               commentElement.innerHTML = `
+                 <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                     <a href="/model/user/profile/${commentItem.userId}">
+                       <img class="profile-image"
+                            src="${commentItem.userProfileImageUrl || '/images/person.jpeg'}"
+                            onerror="this.src='/images/person.jpeg'"
+                            style="width: 30px; height: 30px; margin-right: 10px; border-radius: 50%; border: 2px solid #3498db;" />
+                     </a>
+                     <a href="/model/user/profile/${commentItem.userId}" style="text-decoration: none; color: #000;">
+                       <b>${commentItem.userName}</b>
+                     </a>
+                     <button class="like-button"
+                             onclick="toggleCommentLike(${commentItem.id}, this)"
+                             style="background: none; border: none; cursor: pointer; margin-left: 10px;">
+                         <i class="fas fa-heart" style="color: ${commentItem.likedByMe ? 'red' : 'black'};"></i>
+                     </button>
+                     <span id="commentLikeCount-${commentItem.id}"
+                           style="margin-left: 5px; color: #555;">${commentItem.likeCount || 0}</span>
+                 </div>
+                 <p>${commentItem.content}</p>
+                 <small style="color: #888;">${new Date(commentItem.createdAt).toLocaleString()}</small>
+               `;
+
+               // 댓글 작성자인 경우에만 삭제 버튼 추가
+               if (globalUserId === commentItem.userId) {
+                 commentElement.innerHTML += `
+                   <button class="delete-button" onclick="confirmDeleteComment(${commentItem.id})">
+                     <i class="fas fa-times"></i> <!-- X 아이콘 -->
+                   </button>
+                 `;
+               }
+
+               // 댓글 목록에 추가
+               commentList.appendChild(commentElement);
+             } else {
+               console.error('Invalid comment data:', commentItem); // 잘못된 댓글 데이터 출력
+             }
+           });
+         })
+         .catch(error => {
+           console.error('데이터 가져오기 오류:', error);
+           alert('데이터 가져오기 오류');
+           window.history.back(); // 오류 발생 시 이전 페이지로 이동
+         });
+       } else {
+         alert('로그인 토큰이 없습니다.');
+         window.history.back(); // 토큰이 없으면 이전 페이지로 이동
+       }
+     } else {
+       alert('잘못된 게시물 ID 입니다.');
+       window.history.back(); // 게시물 ID가 잘못되었을 경우 이전 페이지로 이동
+     }
+   });
+
+
+   function confirmDeleteComment(commentId) {
+       // 삭제 확인 alert
+       if (confirm("댓글을 삭제하시겠습니까?")) {
+           // 삭제 API 호출
+           deleteComment(commentId);
+       }
+   }
+
+   function deleteComment(commentId) {
+       const token = localStorage.getItem('accessToken'); // 로그인 토큰 가져오기
+       if (!token) {
+           alert('로그인 토큰이 없습니다. 다시 로그인 해주세요.');
+           return;
+       }
+
+       fetch(`/comment/delete/${commentId}`, {
+           method: 'DELETE',
+           headers: {
+               'Authorization': `Bearer ${token}`
+           }
+       })
+       .then(response => {
+           if (response.ok) {
+               alert('댓글이 성공적으로 삭제되었습니다.');
+               // 페이지를 새로고침
+               location.reload();
+           } else {
+               alert('댓글 삭제에 실패했습니다.');
+           }
+       })
+       .catch(error => {
+           console.error('댓글 삭제 중 오류 발생:', error);
+           alert('댓글 삭제 중 오류가 발생했습니다.');
+       });
+   }
+
+
+    function toggleLike() {
+      const pathname = window.location.pathname; // URL 경로 가져오기
+      const pathParts = pathname.split('/');     // '/'를 기준으로 분리
+      const postId = pathParts[pathParts.length - 1]; // 마지막 부분이 'postId'
+
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        fetch(`/post/getPost/${postId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const userId = data.value.userId; // 응답에서 userId 가져오기
+          const authorId = data.value.post.author?.id; // 게시물 작성자 ID 가져오기
+          const likeIcon = document.getElementById('storyLikeIcon');
+          const likeCountElement = document.getElementById('storyLikeCount');
+
+          // 작성자와 동일한 사용자일 경우 좋아요/싫어요 금지
+          if (userId === authorId) {
+            alert('게시물 작성자는 좋아요를 할 수 없습니다.');
+            return;
+          }
+
+          // 현재 좋아요 상태를 체크 (red이면 이미 좋아요)
+          if (likeIcon.style.color === 'red') {
+            // 좋아요 상태일 때는 unlike API 호출
+            fetch(`/post/unlike/${postId}`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Unlike response:', data);
+
+              // 좋아요 수를 서버에서 받아와서 UI를 갱신
+              const updatedLikeCount = data.value || 0;
+              likeCountElement.innerText = updatedLikeCount;  // 갱신된 좋아요 수 반영
+
+              // 좋아요 아이콘 색상 변경 (검정색으로 변경)
+              likeIcon.style.color = 'black';
+            })
+            .catch(error => console.error('Error unliking post:', error));
+          } else {
+            // 좋아요 상태가 아닐 경우에는 like API 호출
+            fetch(`/post/like/${postId}`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Like response:', data);
+
+              // 좋아요 수를 서버에서 받아와서 UI를 갱신
+              const updatedLikeCount = data.value || 0;
+              likeCountElement.innerText = updatedLikeCount;  // 갱신된 좋아요 수 반영
+
+              // 좋아요 아이콘 색상 변경 (빨간색으로 변경)
+              likeIcon.style.color = 'red';
+            })
+            .catch(error => console.error('Error liking post:', error));
+          }
+        })
+        .catch(error => console.error('Error fetching post data:', error));
+      } else {
+        alert('로그인 토큰이 없습니다.');
+      }
+    }
+
+
+
+   function addComment(commentListId, commentInputId) {
+     const commentContent = document.getElementById(commentInputId).value.trim(); // 댓글 내용 가져오기
+     if (!commentContent) {
+       alert('댓글 내용을 입력하세요.');
+       return; // 댓글 내용이 비어있으면 처리하지 않음
+     }
+
+     const postId = window.location.pathname.split('/').pop(); // URL에서 postId 추출
+     const token = localStorage.getItem('accessToken'); // 저장된 토큰 가져오기
+
+     if (!globalUserId) {
+       alert('사용자 정보를 가져오지 못했습니다. 다시 시도해주세요.');
+       return;
+     }
+
+     const commentData = {
+       postId: postId,
+       content: commentContent,
+       userId: globalUserId // 전역 변수에서 가져온 userId 사용
+     };
+
+     if (token) {
+       fetch('/comment', {
+         method: 'POST',
+         headers: {
+           'Authorization': `Bearer ${token}`,
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(commentData)
+       })
+       .then(response => response.json())
+       .then(data => {
+         if (data.code === 0) { // 댓글 작성 성공
+           alert('댓글이 성공적으로 등록되었습니다.');
+           document.getElementById(commentInputId).value = ''; // 입력창 초기화
+           const newComment = data.value; // 서버에서 반환된 댓글 데이터
+           addCommentToList(newComment);
+           window.location.reload(); // 새로고침
+         } else {
+           console.error('댓글 작성 실패:', data.message);
+           alert('댓글 작성에 실패했습니다.');
+         }
+       })
+       .catch(error => {
+         console.error('댓글 작성 오류:', error);
+         alert('댓글 작성에 실패했습니다.');
+       });
+     } else {
+       alert('로그인 토큰이 없습니다.');
+     }
+   }
+
+   function addCommentToList(comment) {
+       const commentList = document.getElementById('storyCommentList');
+       const commentElement = document.createElement('div');
+       commentElement.classList.add('sl__item__contents__comment');
+
+       // 댓글 요소 구조에 하트 아이콘과 좋아요 수 추가
+       commentElement.innerHTML = `
+           <div style="display: flex; align-items: center; margin-bottom: 5px;">
+               <img class="profile-image" src="${comment.userProfileImageUrl || '/images/person.jpeg'}"
+                 onerror="this.src='/images/person.jpeg'"
+                 style="width: 30px; height: 30px; margin-right: 10px;" />
+               <b>${comment.userName}</b>
+               <button class="like-button"
+                 onclick="toggleCommentLike(${comment.id}, this)"
+                 style="background: none; border: none; cursor: pointer; margin-left: 10px;">
+                   <i class="fas fa-heart" style="color: ${comment.isLiked ? 'red' : 'black'};"></i>
+               </button>
+               <span id="commentLikeCount-${comment.id}"
+                 style="margin-left: 5px; color: #555;">${comment.likeCount || 0}</span>
+           </div>
+           <p>${comment.content}</p>
+           <div style="display: flex; justify-content: space-between; align-items: center;">
+               <small style="color: #888;">${new Date(comment.createdAt).toLocaleString()}</small>
+           </div>
+           <button class="delete-button" onclick="deleteComment(${comment.id}, this)">
+               <i class="fas fa-times"></i> <!-- X 아이콘 -->
+           </button>
+       `;
+
+       commentList.appendChild(commentElement);
+   }
+
+
+   function toggleCommentLike(commentId, button) {
+       const token = localStorage.getItem('accessToken');
+       if (token) {
+           const isLiked = button.querySelector('i').style.color === 'red'; // 현재 좋아요 상태 체크
+           const apiUrl = isLiked
+               ? `/comment/unlike/${commentId}` // 댓글 좋아요 취소
+               : `/comment/like/${commentId}`;  // 댓글 좋아요
+
+           fetch(apiUrl, {
+               method: 'GET',
+               headers: {
+                   'Authorization': `Bearer ${token}`
+               }
+           })
+           .then(response => response.json())
+           .then(data => {
+
+               const updatedLikeCount = data.value || 0; // 갱신된 좋아요 수 (API에서 반환한 값)
+               const likeCountElement = document.getElementById(`commentLikeCount-${commentId}`);
+
+               // 좋아요 수 업데이트
+               likeCountElement.innerText = updatedLikeCount;
+
+               // 아이콘 색상 업데이트
+               if (isLiked) {
+                   button.querySelector('i').style.color = 'black'; // 좋아요 취소 시 색상 변경 (검정색)
+               } else {
+                   button.querySelector('i').style.color = 'red'; // 좋아요 시 색상 변경 (빨간색)
+               }
+           })
+           .catch(error => console.error('댓글 좋아요 오류:', error));
+       } else {
+           alert('로그인 토큰이 없습니다.');
+       }
+   }
+   function showPopup() {
+     const popup = document.getElementById('popup');
+     if (popup) {
+       popup.style.display = 'flex'; // 팝업 보이기
+     }
+   }
+   // 하나의 closePopup 함수로 두 팝업을 닫기
+   function closePopup(popupId) {
+       const popup = document.getElementById(popupId);
+       if (popup) {
+           popup.style.display = 'none';
+       } else {
+           console.error(popupId + '을 찾을 수 없습니다.');
+       }
+   }
+
+   function openEditModal(button) {
+       // 팝업 닫기
+       const popup = document.getElementById('popup');
+       if (popup) {
+           popup.style.display = 'none'; // popup 숨기기
+       }
+
+       const postId = button.getAttribute('data-post-id').trim(); // 공백을 제거
+       const post = postData?.post; // postData가 있을 때만 post에 접근하도록
+
+       // post가 제대로 로드되었는지 확인
+       if (!post) {
+           console.error('게시글 데이터를 찾을 수 없습니다.');
+           return;
+       }
+
+       // 수정 폼에 데이터를 채우기
+       const contentElement = document.getElementById('editPostContent');
+       const postImageElement = document.getElementById('editPostImage');
+       const postIdElement = document.getElementById('editPostId');
+
+       // 사용자 이름과 프로필 이미지 업데이트
+       const editPostUserName = document.getElementById('editPostUserName'); // 수정 팝업 내의 사용자 이름
+       const editPostUserProfileImage = document.getElementById('editPostUserProfileImage'); // 수정 팝업 내의 프로필 이미지
+
+       // 각 요소가 존재하는지 확인
+       if (!contentElement || !postIdElement || !editPostUserName || !editPostUserProfileImage) {
+           console.error('필요한 요소가 존재하지 않습니다.');
+           return;
+       }
+
+       // 수정 폼에 데이터 삽입
+       contentElement.value = post.content;
+       postIdElement.value = post.id;
+       postImageElement.src = '/uploads/images/' + post.contentImageUrl;
+
+       // 사용자 이름과 프로필 이미지 설정
+       editPostUserName.textContent = post.author.info.name;
+       editPostUserProfileImage.src = post.author.info.profileImageUrl;
+
+       // 이미지 URL이 잘못되었을 경우 기본 이미지 설정
+       editPostUserProfileImage.onerror = function () {
+           this.src = '/images/person.jpeg'; // 기본 이미지로 설정
+       };
+
+       // 수정 팝업창 표시
+       const editPopup = document.getElementById('editPopup');
+       if (editPopup) {
+           editPopup.style.display = 'block'; // 팝업을 표시합니다.
+       } else {
+           console.error('editPopup이 존재하지 않습니다.');
+       }
+   }
+
+   function updatePost() {
+       const postId = document.getElementById('editPostId').value.trim(); // .value.trim() 추가
+       const content = document.getElementById('editPostContent').value.trim();
+       const contentImageUrl = document.getElementById('editPostImageUrl').files[0]; // 파일 선택
+
+       if (!postId || !content) {
+           alert('게시물 ID와 내용을 모두 입력해야 합니다.');
+           return;
+       }
+
+       // 게시글 내용 길이 검증
+       if (content.length < 5 || content.length > 500) {
+           alert('게시물 내용은 5자 이상 500자 이하로 작성해야 합니다.');
+           return;
+       }
+
+       const token = localStorage.getItem('accessToken');
+       if (!token) {
+           alert('로그인 토큰이 없습니다.');
+           return;
+       }
+
+       // FormData를 사용하여 데이터 전송
+       const formData = new FormData();
+       formData.append("content", content);
+       formData.append("userId", globalUserId); // userId를 formData에 추가
+       formData.append("state", "PUBLIC"); // 예시: 'PUBLIC'로 수정
+
+       if (contentImageUrl) { // 파일이 존재하면
+           formData.append("contentImageUrl", contentImageUrl); // 파일 추가
+           console.log("파일이 FormData에 추가되었습니다:", contentImageUrl); // 파일 확인용 로그
+       }
+
+       // FormData의 내용을 확인
+       for (let pair of formData.entries()) {
+           console.log(pair[0] + ', ' + pair[1]);
+       }
+
+       fetch(`/post/${postId}`, {
+           method: 'PATCH',
+           headers: {
+               'Authorization': `Bearer ${token}`
+           },
+           body: formData
+       })
+       .then(response => response.json())
+       .then(data => {
+           if (data.code === 0) {
+               alert('게시물이 성공적으로 수정되었습니다.');
+
+               // 팝업창 닫기
+               closePopup(); // 팝업창 닫는 함수 호출
+               // 페이지 새로고침
+               location.reload();
+           } else {
+               alert('게시물 수정에 실패했습니다. 다시 시도해주세요.');
+           }
+       })
+       .catch(error => {
+           console.error('게시물 수정 오류:', error);
+           alert('게시물 수정에 실패했습니다.');
+       });
+   }
+
+
+   // 파일 미리보기
+   function imageChoose(input) {
+       const file = input.files[0]; // 파일 선택
+       if (file) {
+           const reader = new FileReader();
+           reader.onload = function(e) {
+               document.getElementById("editPostImage").src = e.target.result; // 이미지 미리보기
+           }
+           reader.readAsDataURL(file);
+       }
+   }
+
+
+   function deleteModel(button) {
+       // 현재 페이지의 URL에서 postId를 추출하기 위해 pathParts 사용
+       const pathname = window.location.pathname; // URL 경로 가져오기
+       const pathParts = pathname.split('/'); // '/'를 기준으로 분리
+       const postId = pathParts[pathParts.length - 1]; // 마지막 부분이 'postId'
+
+       console.log(postId); // 실제 postId 값 확인
+
+       if (!postId) {
+           alert('게시글 ID를 찾을 수 없습니다.');
+           return;
+       }
+
+       // 삭제 확인 Alert 창
+       if (confirm('정말로 게시글을 삭제하시겠습니까?')) {
+           const token = localStorage.getItem('accessToken'); // 로그인 토큰 가져오기
+           if (!token) {
+               alert('로그인 토큰이 없습니다. 다시 로그인 해주세요.');
+               return;
+           }
+
+           // 서버로 DELETE 요청 보내기
+           fetch(`/post/delete/${postId}`, {
+               method: 'DELETE',
+               headers: {
+                   'Authorization': `Bearer ${token}` // 'Bearer ' 앞에 공백이 없어야 합니다.
+               }
+           })
+           .then(response => {
+               if (response.ok) {
+                   alert('게시글이 성공적으로 삭제되었습니다.');
+                   // 특정 URL로 이동
+                   window.location.href = 'http://localhost:8080/model/user/profile';
+               } else {
+                   return response.json().then(data => {
+                       throw new Error(data.message || '게시글 삭제에 실패했습니다.');
+                   });
+               }
+           })
+           .catch(error => {
+               console.error('게시글 삭제 오류:', error);
+               alert('게시글 삭제에 실패했습니다. 다시 시도해주세요.');
+           });
+       }
+   }
+
+
+
+
+
+
+</script>
 <body>
+<div class="story-list__item" id="postItem">
+    <div class="sl__item__header">
+        <div>
+            <img class="profile-image" src="#" onerror="this.src='/images/person.jpeg'" id="postUserProfileImage" />
+        </div>
+        <div id="postUserName">사용자 이름</div>
+        <!-- 게시물 내용 -->
+        <div id="postContainer">
+        </div>
+    </div>
 
-<header class="header">
-    <div class="container">
-        <a href="/model/feed" class="logo">
-            <img src="/images/logo.jpg" alt="">
-        </a>
+    <div class="sl__item__img">
+        <img src="#" id="postImage" />
+    </div>
 
-        <!-- 중앙 검색 기능 추가 -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="검색할 유저명을 입력해주세요">
-            <button id="searchBtn">
-                <i class="fas fa-search"></i>
+    <div class="sl__item__contents">
+        <div class="sl__item__contents__icon" style="margin-top: 10px; margin-left: 5px;">
+            <button style="margin-top: 7px;" onclick="toggleLike(123, 1)"> <!-- postId와 userId를 실제 데이터로 대체 -->
+                <i class="fas fa-heart" id="storyLikeIcon"></i>
             </button>
+            <span class="like"><b id="storyLikeCount">0</b> likes</span>
         </div>
 
-        <!-- 검색 결과 모달 -->
-        <div class="modal-info search-modal" id="searchResultModal" style="display: none;">
-            <div class="modal" style="margin: auto; margin-top: 150px; padding: 10px; width: 400px; background: #fff;
-    border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
-                <h3 style="text-align: center;">검색 결과</h3>
-                <div class="tab-content">
-                    <ul id="searchResultsList" class="user-list"></ul>
+        <br>
+        <div class="sl__item__contents__content">
+            <p id="postContent">게시물 내용</p>
+        </div>
+
+        <!-- 댓글 리스트 -->
+        <div id="storyCommentList">
+            <!-- 댓글이 동적으로 추가됩니다. -->
+        </div>
+        <br>
+
+        <div class="sl__item__input">
+            <input type="text" placeholder="댓글 달기..." id="storyCommentInput" />
+            <button type="button" onclick="addComment('storyCommentList', 'storyCommentInput')">게시</button>
+        </div>
+    </div>
+</div>
+
+<<!-- 팝업 -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <button class="popup-button" data-post-id="${postId}" onclick="openEditModal(this)">게시글 수정</button>
+        <button class="popup-button" data-post-id="${postId}" onclick="deleteModel(this)">게시글 삭제</button>
+        <button class="popup-button" onclick="closePopup('popup')">닫기</button>
+    </div>
+</div>
+
+<!-- 수정 팝업 -->
+<div id="editPopup" class="popup">
+    <div class="popup-content">
+        <div class="story-list__item" id="editPostItem">
+            <div class="sl__item__header">
+                <div>
+                    <img class="profile-image" src="#" onerror="this.src='/images/person.jpeg'" id="editPostUserProfileImage" />
                 </div>
-                <button class="close-btn" style="margin-top: 10px; padding: 8px 15px; background: #007bff;
-        color: white; border: none; border-radius: 5px; cursor: pointer;">닫기</button>
+                <div id="editPostUserName">사용자 이름</div>
+            </div>
+
+            <div class="sl__item__img">
+                <img src="/uploads/images/${editPostImageUrl}" id="editPostImage" />
+            </div>
+
+            <div class="sl__item__contents">
+                <div class="sl__item__contents__content">
+                    <textarea id="editPostContent" placeholder="게시글 내용을 수정하세요." rows="4" style="width: 100%;"></textarea>
+                </div>
+
+                <div class="sl__item__contents__content" style="margin-top: 10px;">
+                    <!-- 파일 선택 -->
+                    <!-- 파일 업로드 필드 -->
+                    <input type="file" id="editPostImageUrl" name="editPostImageUrl" onchange="imageChoose(this)" />
+
+                    <input type="hidden" id="editPostId" />
+                </div>
+
+                <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+                    <!-- updatePost() 함수 호출 -->
+                    <button onclick="updatePost()" style="background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">저장</button>
+                    <button onclick="closePopup('editPopup')" style="background-color: #ddd; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">취소</button>
+                </div>
             </div>
         </div>
-        <!-- 검색 결과 모달 끝 -->
-
-        <nav class="navi">
-            <ul class="navi-list">
-                <li class="navi-item"><a href="/model/feed">
-                    <i class="fas fa-home"></i>
-                </a></li>
-                <li class="navi-item"><a href="/model/user/notification">
-                    <i id="notificationIcon" class="far fa-bell" style="color: gray;"></i>
-                </a></li>
-                <li class="navi-item"><a href="/model/user/profile">
-                    <i class="far fa-user"></i>
-                </a></li>
-            </ul>
-        </nav>
     </div>
-</header>
+</div>
+
+</body>
+</html>

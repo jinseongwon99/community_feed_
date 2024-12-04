@@ -1,8 +1,10 @@
 package com.jinsungwon99.post.ui;
 
+import com.jinsungwon99.common.domain.exception.ErrorCode;
 import com.jinsungwon99.common.idempotency.Idempotent;
 import com.jinsungwon99.common.principal.AuthPrincipal;
 import com.jinsungwon99.common.principal.UserPrincipal;
+import com.jinsungwon99.common.ui.BaseException;
 import com.jinsungwon99.common.ui.Response;
 import com.jinsungwon99.post.application.CommentService;
 import com.jinsungwon99.post.application.Interfaces.LikeCommentRepository;
@@ -52,7 +54,7 @@ public class PostController {
         @ModelAttribute UpdatePostRequestDto dto) {
 
         if (postId == null) {
-            throw new IllegalArgumentException("postId는 null일 수 없습니다.");
+            throw new BaseException(ErrorCode.NULL_POST_ID);
         }
 
         Post post = postService.updatePost(postId, dto);
@@ -77,7 +79,6 @@ public class PostController {
         @AuthPrincipal UserPrincipal userPrincipal) {
         Long userId = userPrincipal.getUserId(); // 로그인한 사용자 ID
         int likeCount = postService.likePost(new LikePostRequestDto(userId, postId));
-
         return Response.ok(likeCount);
     }
 

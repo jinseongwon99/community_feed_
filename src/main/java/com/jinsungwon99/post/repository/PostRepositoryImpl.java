@@ -1,5 +1,7 @@
 package com.jinsungwon99.post.repository;
 
+import com.jinsungwon99.common.domain.exception.ErrorCode;
+import com.jinsungwon99.common.ui.BaseException;
 import com.jinsungwon99.post.application.Interfaces.PostRepository;
 import com.jinsungwon99.post.domain.Post;
 import com.jinsungwon99.post.repository.entity.post.PostEntity;
@@ -32,9 +34,10 @@ public class PostRepositoryImpl implements PostRepository {
     public Post findById(Long id) {
         PostEntity entity = jpaPostRepository
             .findById(id)
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new BaseException(ErrorCode.NULL_POST_ID));
         return entity.toPost();
     }
+
     @Override
     public List<Post> findAllByUserIdOrderByIdDesc(Long userId) {
         List<PostEntity> postEntityList = jpaPostRepository.findAllByAuthorIdOrderByIdDesc(userId);
