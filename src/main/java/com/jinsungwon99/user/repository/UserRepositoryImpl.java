@@ -1,5 +1,7 @@
 package com.jinsungwon99.user.repository;
 
+import com.jinsungwon99.common.domain.exception.ErrorCode;
+import com.jinsungwon99.common.ui.BaseException;
 import com.jinsungwon99.user.application.interfaces.UserRepository;
 import com.jinsungwon99.user.domain.User;
 import com.jinsungwon99.user.repository.entity.UserEntity;
@@ -28,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User findById(Long id) {
         UserEntity userEntity = jpaUserRepository
             .findById(id)
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new BaseException(ErrorCode.ENTITY_NOT_FOUND));
 
         return userEntity.toUser();
     }

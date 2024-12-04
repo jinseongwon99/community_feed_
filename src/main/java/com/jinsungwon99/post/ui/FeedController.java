@@ -33,7 +33,7 @@ public class FeedController {
 
     @GetMapping
     public Response<List<GetPostContentResponseDto>> getPostFeed(@AuthPrincipal UserPrincipal userPrincipal) {
-        Long lastPostId = 10L;
+        Long lastPostId = 20L;
 
         // 사용자 정보 가져오기
         Long userId = userPrincipal.getUserId();

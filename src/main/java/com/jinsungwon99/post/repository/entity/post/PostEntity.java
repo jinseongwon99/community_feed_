@@ -32,7 +32,7 @@ public class PostEntity extends TimeBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne                                    //foreignKey 생성 제한 (데이터 수정이 어려워서 foreignKey 를 잘 사용 X)
+    @ManyToOne     //foreignKey 생성 제한 (데이터 수정이 어려워서 foreignKey 를 잘 사용 X)
     @JoinColumn(name = "author_id" , foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private UserEntity author;
 
