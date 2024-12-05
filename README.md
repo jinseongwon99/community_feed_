@@ -3,11 +3,12 @@
 <div align='center'>
 
 <h1><b>커뮤니티 SNS형 피드 프로젝트</b></h1>
-<h3><b>프로젝트 부제목</b></h3>
 
-🔗 [배포 링크](https://)
+![image](https://github.com/user-attachments/assets/245822ab-cb4d-40cd-8a88-3d7be2467035)
 
-<img src="" alt="intro title image"/>
+https://github.com/user-attachments/assets/23e45c6a-6beb-469d-8ac9-14162db31b65
+
+
 
 </div>
 
@@ -24,8 +25,7 @@
 7. [주요 기능 소개](#7)
 8. [주요 코드 ](#8)
 9. [트러블 슈팅](#9)
-10. [프로젝트 회고](#10)
-11. [시작 가이드](#11)
+10. [시작 가이드](#10)
 
 <br />
 
@@ -44,7 +44,7 @@
 
 ## <span id="2">📅 2. 개발 일정</span>
 
-> 프로젝트 개발 기간: 2024.00.00 ~ 2024.00.00
+> 프로젝트 개발 기간: 2024.11.01 ~ 2024.12.01
 
 <br>
 
@@ -155,29 +155,306 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 
 > 브랜치
 
-- `main`:
-- `dev`:
--
+- main
 
 <br>
 
 > 디렉토리 구조
 
-```
-.
-├── src
-│   ├── components
-│   ├── pages
-│   ├── redux
-│   ├── utils
-│   └── App.js
-├── public
-│   ├── index.html
-│   └── favicon.ico
-└── package.json
-
+<details>
+  
 ```
 
+├─java
+│  └─com
+│      └─jinsungwon99
+│          │  Application.java
+│          │  
+│          ├─admin
+│          │  ├─repository
+│          │  │      AdminTableQueryRepositoryImpl.java
+│          │  │      UserStateQueryRepositoryImpl.java
+│          │  │      
+│          │  └─ui
+│          │      │  AdminController.java
+│          │      │  
+│          │      ├─dto
+│          │      │  │  GetTableListResponse.java
+│          │      │  │  
+│          │      │  ├─posts
+│          │      │  │      GetPostTableRequestDto.java
+│          │      │  │      GetPostTableResponseDto.java
+│          │      │  │      
+│          │      │  └─users
+│          │      │          GetDailyRegisterUserResponseDto.java
+│          │      │          GetUserTableRequestDto.java
+│          │      │          GetUserTableResponseDto.java
+│          │      │          
+│          │      └─query
+│          │              AdminTableQueryRepository.java
+│          │              UserStatsQueryRepository.java
+│          │              
+│          ├─auth
+│          │  ├─application
+│          │  │  │  AuthService.java
+│          │  │  │  EmailService.java
+│          │  │  │  
+│          │  │  ├─dto
+│          │  │  │      CreateUserAuthRequestDto.java
+│          │  │  │      LoginRequestDto.java
+│          │  │  │      SendEmailRequestDto.java
+│          │  │  │      UserAccessTokenResponseDto.java
+│          │  │  │      
+│          │  │  └─Interfaces
+│          │  │          EmailSendRepository.java
+│          │  │          EmailVerificationRepository.java
+│          │  │          UserAuthRepository.java
+│          │  │          
+│          │  ├─domain
+│          │  │      Email.java
+│          │  │      Password.java
+│          │  │      RandomTokenGenerator.java
+│          │  │      SHA256.java
+│          │  │      TokenProvider.java
+│          │  │      UserAuth.java
+│          │  │      UserRole.java
+│          │  │      
+│          │  ├─repository
+│          │  │  │  EmailSendRepositoryImpl.java
+│          │  │  │  EmailVerificationRepositoryImpl.java
+│          │  │  │  UserAuthRepositoryImpl.java
+│          │  │  │  
+│          │  │  ├─entity
+│          │  │  │      EmailVerificationEntity.java
+│          │  │  │      UserAuthEntity.java
+│          │  │  │      
+│          │  │  └─jpa
+│          │  │          JpaEmailVerificationRepository.java
+│          │  │          JpaUserAuthRepository.java
+│          │  │          
+│          │  └─ui
+│          │      │  AuthModelController.java
+│          │      │  LoginController.java
+│          │      │  SignUpController.java
+│          │      │  
+│          │      └─dto
+│          │              VerifyEmailResponseDto.java
+│          │              
+│          ├─common
+│          │  ├─application
+│          │  │      NotificationService.java
+│          │  │      
+│          │  ├─config
+│          │  │      AuthConfig.java
+│          │  │      FcmConfig.java
+│          │  │      QueryDslConfig.java
+│          │  │      
+│          │  ├─domain
+│          │  │  │  Pageable.java
+│          │  │  │  PositiveIntegerCounter.java
+│          │  │  │  
+│          │  │  └─exception
+│          │  │          ErrorCode.java
+│          │  │          
+│          │  ├─idempotency
+│          │  │  │  Idempotency.java
+│          │  │  │  IdempotencyAspect.java
+│          │  │  │  IdempotencyRepository.java
+│          │  │  │  Idempotent.java
+│          │  │  │  
+│          │  │  └─repostiory
+│          │  │      │  IdempotencyRepositoryImpl.java
+│          │  │      │  
+│          │  │      ├─entity
+│          │  │      │      IdempotencyEntity.java
+│          │  │      │      
+│          │  │      └─jpa
+│          │  │              JpaIdempotencyRepository.java
+│          │  │              
+│          │  ├─principal
+│          │  │      AuthPrincipal.java
+│          │  │      AuthPrincipalArgumentResolver.java
+│          │  │      UserPrincipal.java
+│          │  │      
+│          │  ├─repository
+│          │  │  │  NotificationRepository.java
+│          │  │  │  
+│          │  │  └─entity
+│          │  │          NotificationEntity.java
+│          │  │          TimeBaseEntity.java
+│          │  │          
+│          │  ├─ui
+│          │  │  │  BaseException.java
+│          │  │  │  GlobalExceptionHandler.java
+│          │  │  │  HealthCheckController.java
+│          │  │  │  Response.java
+│          │  │  │  
+│          │  │  └─dto
+│          │  │          SaveNotificationRequestDto.java
+│          │  │          
+│          │  └─utils
+│          │          ResponseObjectMapper.java
+│          │          TimeCalculator.java
+│          │          
+│          ├─message
+│          │  ├─application
+│          │  │  └─interfaces
+│          │  │          MessageRepository.java
+│          │  │          
+│          │  ├─component
+│          │  │      MailComponents.java
+│          │  │      
+│          │  └─repository
+│          │      │  FcmMessageRepositoryImpl.java
+│          │      │  JpaFcmTokenRepository.java
+│          │      │  
+│          │      └─entity
+│          │              FcmTokenEntity.java
+│          │              
+│          ├─post
+│          │  ├─application
+│          │  │  │  CommentService.java
+│          │  │  │  PostService.java
+│          │  │  │  
+│          │  │  ├─dto
+│          │  │  │      CreateCommentRequestDto.java
+│          │  │  │      CreatePostRequestDto.java
+│          │  │  │      GetPostResponseDto.java
+│          │  │  │      LikeCommentRequestDto.java
+│          │  │  │      LikePostRequestDto.java
+│          │  │  │      UpdateCommentRequestDto.java
+│          │  │  │      UpdatePostRequestDto.java
+│          │  │  │      
+│          │  │  └─Interfaces
+│          │  │          CommentRepository.java
+│          │  │          LikeCommentRepository.java
+│          │  │          LikePostRepository.java
+│          │  │          PostRepository.java
+│          │  │          
+│          │  ├─domain
+│          │  │  │  Post.java
+│          │  │  │  
+│          │  │  ├─comment
+│          │  │  │      Comment.java
+│          │  │  │      
+│          │  │  ├─common
+│          │  │  │      DatetimeInfo.java
+│          │  │  │      
+│          │  │  └─content
+│          │  │          CommentContent.java
+│          │  │          Content.java
+│          │  │          PostContent.java
+│          │  │          PostPublicationState.java
+│          │  │          
+│          │  ├─repository
+│          │  │  │  CommentRepositoryImpl.java
+│          │  │  │  LikeRepositoryImpl.java
+│          │  │  │  PostRepositoryImpl.java
+│          │  │  │  
+│          │  │  ├─entity
+│          │  │  │  ├─comment
+│          │  │  │  │      CommentEntity.java
+│          │  │  │  │      
+│          │  │  │  ├─like
+│          │  │  │  │      LikeEntity.java
+│          │  │  │  │      LikeIdEntity.java
+│          │  │  │  │      LikeTarget.java
+│          │  │  │  │      
+│          │  │  │  └─post
+│          │  │  │          PostEntity.java
+│          │  │  │          PostPublicationStateConvert.java
+│          │  │  │          UserPostQueueEntity.java
+│          │  │  │          
+│          │  │  ├─jpa
+│          │  │  │      JpaCommentRepository.java
+│          │  │  │      JpaLikeRepository.java
+│          │  │  │      JpaPostRepository.java
+│          │  │  │      JpaUserPostQueueRepository.java
+│          │  │  │      
+│          │  │  └─post_queue
+│          │  │          UserPostQueueCommandRepository.java
+│          │  │          UserPostQueueCommandRepositoryImpl.java
+│          │  │          UserPostQueueQueryRepository.java
+│          │  │          UserPostQueueQueryRepositoryImpl.java
+│          │  │          UserQueueRedisRepository.java
+│          │  │          UserQueueRedisRepositoryImpl.java
+│          │  │          
+│          │  └─ui
+│          │      │  CommentController.java
+│          │      │  FeedController.java
+│          │      │  FeedModelController.java
+│          │      │  PostController.java
+│          │      │  
+│          │      └─dto
+│          │              GetContentResponseDto.java
+│          │              GetPostContentResponseDto.java
+│          │              GetPostMainResponseDto.java
+│          │              
+│          ├─sampleData
+│          │      SampleDataLoader.java
+│          │      
+│          └─user
+│              ├─application
+│              │  │  UserRelationService.java
+│              │  │  UserService.java
+│              │  │  
+│              │  ├─dto
+│              │  │      CreateUserRequestDto.java
+│              │  │      FollowUserRequestDto.java
+│              │  │      GetUserListResponseDto.java
+│              │  │      GetUserResponseDto.java
+│              │  │      
+│              │  └─interfaces
+│              │          UserRelationRepository.java
+│              │          UserRepository.java
+│              │          
+│              ├─domain
+│              │      User.java
+│              │      UserInfo.java
+│              │      
+│              ├─repository
+│              │  │  UserRelationRepositoryImpl.java
+│              │  │  UserRepositoryImpl.java
+│              │  │  
+│              │  ├─entity
+│              │  │      UserEntity.java
+│              │  │      UserRelationEntity.java
+│              │  │      UserRelationIdEntity.java
+│              │  │      
+│              │  └─jpa
+│              │      │  JpaUserListPagingQueryRepository.java
+│              │      │  JpaUserListQueryRepository.java
+│              │      │  JpaUserRepository.java
+│              │      │  
+│              │      └─user
+│              │          └─userRelation
+│              │                  JpaUserRelationRepository.java
+│              │                  
+│              └─ui
+│                  │  UserController.java
+│                  │  UserModelController.java
+│                  │  UserNotificationController.java
+│                  │  UserRelationController.java
+│                  │  UserSearchController.java
+│                  │  
+│                  └─dto
+│                          GetProfileRequestDto.java
+│                          GetProfileResponseDto.java
+│                          GetSearchByUserNameResponseDto.java
+│                          GetUnreadNotificationResponseDto.java
+│                          GetUserRelationListResponseDto.java
+│                          PatchPasswordRequestDto.java
+│                          PatchProfileImageRequestDto.java
+│                          PatchProfileRequestDto.java
+│                          
+└─resources
+    │  application.yml
+    │  community-service-adminsdk.json
+    
+```
+
+
+</details>
 <br>
 
 <!-- Top Button -->
@@ -187,7 +464,10 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 
 ## <span id="7">7. 💻 주요 기능 소개</span>
 
-프로젝트의 주요 기능을 GIF를 첨부하여 설명해주세요.
+
+https://github.com/user-attachments/assets/ef0aa0da-381d-4eaf-a782-4586ff5c855c
+
+
 
 ### 1) 홈
 
@@ -285,14 +565,22 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 ## <span id="8">✨ 8. 주요 코드</span>
 
 <details>
-<summary> 주요 코드에 대한 설명을 입력하세요. </summary>
+<summary> API 동시성, 중복 처리 문제 (멱등성) </summary>
 
 <div>
-설명
+  <br>
+  중복 처리 문제를 해결하기 위해, 멱등성(Idempotency)을 적용하여 문제를 해결<br />
+- Idempotency 커스텀 어노테이션 추가<br />
+  - API에 어노테이션으로 멱등성 적용<br /> 
+- Idempotency Key 도입<br />
+  - header에 Idempotency-Key 필드에 랜덤한 UUID키값을 전달<br />
+- Idempotency 저장소 구현<br />
+  - 처음 실행시 Idempotency-Key를 DB에 저장<br />
+  - 중복 실행시 저장된 Idempotency-Key 확인 후 중복방지 처리한 Response 반환<br />
+<br />
+  
+![image](https://github.com/user-attachments/assets/8175f36d-0363-4f0e-8494-5842bd266780)
 
-```jsx
-
-```
 
 </div>
 </details>
@@ -300,14 +588,140 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 <br>
 
 <details>
-<summary> 주요 코드에 대한 설명을 입력하세요. </summary>
+<summary> 커스텀 어노테이션 (header의 access 토큰 조회) 생성 </summary>
 
 <div>
-설명
+<br />
+  header 의 Authorization 필드의 "Bearer " 타입의 토큰을 파싱해서 정보 조회<br />
+  <br />
 
-```jsx
+![image](https://github.com/user-attachments/assets/79ca03d1-9201-474c-8ab1-ab13ece35fc9)
 
-```
+
+</div>
+</details>
+
+<br>
+
+<details>
+<summary> QueryDsl 주요 코드 </summary>
+
+<div>
+
+  ```jsx
+  @Repository
+@Profile({"!test"})
+@RequiredArgsConstructor
+public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepository {
+
+    private final JPAQueryFactory queryFactory;
+
+    private static final QUserPostQueueEntity userPostQueueEntity = QUserPostQueueEntity.userPostQueueEntity;
+    private static final QPostEntity postEntity = QPostEntity.postEntity;
+    private static final QUserEntity userEntity = QUserEntity.userEntity;
+    private static final QLikeEntity likeEntity = QLikeEntity.likeEntity;
+    private static final QCommentEntity commentEntity = QCommentEntity.commentEntity;
+
+    public List<GetContentResponseDto> getCommentResponse(Long postId, Long userId, Long lastCommentId) {
+        return queryFactory
+            .select(
+                Projections.fields(    
+                    GetContentResponseDto.class,    
+                    commentEntity.id.as("id"),         
+                    commentEntity.content.as("content"),
+                    commentEntity.author.id.as("authorId"),
+                    commentEntity.author.id.as("userId"),
+                    commentEntity.author.name.as("userName"),
+                    commentEntity.author.profileImageUrl.as("userProfileImageUrl"),
+                    commentEntity.regDt.as("createdAt"),
+                    commentEntity.updDt.as("updatedAt"),
+                    commentEntity.likeCount.as("likeCount"),
+                    likeEntity.isNotNull().as("isLikedByMe")   
+                )
+            )
+            .from(commentEntity)
+            .leftJoin(likeEntity).on(hasLikeComment(userId))
+            .where(
+                commentEntity.post.id.eq(postId),
+                hasCommentLastData(lastCommentId)  
+            )
+            .orderBy(commentEntity.id.desc())
+            .limit(20)
+            .fetch();
+    }
+
+    public List<GetPostContentResponseDto> getContentResponse(Long userId, Long lastContentId) {
+        return queryFactory
+            .select(
+                Projections.fields(     
+                    GetPostContentResponseDto.class,    
+                    postEntity.id.as("id"),        
+                    postEntity.content.as("content"),
+                    userEntity.id.as("userId"),
+                    userEntity.name.as("userName"),
+                    userEntity.profileImageUrl.as("userProfileImageUrl"),
+                    postEntity.regDt.as("createdAt"),
+                    postEntity.updDt.as("updatedAt"),
+                    postEntity.commentCount.as("commentCount"),
+                    postEntity.likeCount.as("likeCount"),
+                    likeEntity.isNotNull().as("isLikedByMe")    
+                )
+            )
+            .from(userPostQueueEntity)
+            .join(postEntity).on(userPostQueueEntity.postId.eq(postEntity.id))
+            .join(userEntity).on(userPostQueueEntity.authorId.eq(userEntity.id))
+            .leftJoin(likeEntity).on(hasLike(userId))
+            .where(
+                userPostQueueEntity.userId.eq(userId),
+                hasLastData(lastContentId)  
+            )
+            .orderBy(userPostQueueEntity.postId.desc())
+            .limit(20)
+            .fetch();
+    }
+
+    private BooleanExpression hasLastData(Long lastId) {
+        if (lastId == null) {
+            return null;
+        }
+
+        return postEntity.id.lt(lastId);   
+    }
+
+    private BooleanExpression hasLike(Long userId) {
+        if (userId == null) {
+            return null;
+        }
+
+        return postEntity.id
+            .eq(likeEntity.id.targetId)
+            .and(likeEntity.id.targetType.eq("POST"))
+            .and(likeEntity.id.userId.eq(userId));
+    }
+
+    private BooleanExpression hasCommentLastData(Long lastId) {
+        if (lastId == null || lastId <= 0) {
+            return null;  
+        }
+
+        return commentEntity.id.lt(lastId); 
+    }
+
+    private BooleanExpression hasLikeComment(Long userId) {
+        if (userId == null) {
+            return null;
+        }
+
+        return commentEntity.id
+            .eq(likeEntity.id.targetId)
+            .and(likeEntity.id.targetType.eq("COMMENT"))
+            .and(likeEntity.id.userId.eq(userId));
+    }
+
+}
+  ```
+
+
 
 </div>
 </details>
@@ -331,7 +745,8 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
   게시글이나 댓글에 대한 좋아요 중복, 네트워크 지연이나 서버오류의 이유로 사용자가 다시 버튼을 누른경우<br />
   ㄴ 예시 1) 사용자가 버튼을 여러 번 눌러서 "좋아요"를 여러 번 클릭하게 되면, 동일한 좋아요 요청이 여러 번 처리되어 원하지 않는 결과가 발생<br />
 
-<코드 추가하기 !!!!!!><br />
+![image](https://github.com/user-attachments/assets/06e4eba9-4973-4c12-8c27-56f1ca1faa29)
+
 
 2. 해결방안 <br />
   중복 처리 문제를 해결하기 위해, 멱등성(Idempotency)을 적용하여 문제를 해결
@@ -357,29 +772,15 @@ chore: 빌드 업무 수정, 패키지 매니저 설정 수정 (프로덕션 코
 
 <br>
 
-## <span id="10">10. 📝 프로젝트 회고</span>
 
-프로젝트 진행 후 느낀 점과 개선할 점을 적어주세요. 블로그에 작성하셨다면 블로그 링크를 첨부해주세요.
 
-<br>
-
-<!-- Top Button -->
-<p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
-
-<br>
-
-## <span id="11">11. 🛠️ 시작 가이드</span>
+## <span id="10">10. 🛠️ 시작 가이드</span>
 
 ### Installation
 1. application.yml 코드 추가 (DB연결, JPA, secret-Key, fcm - Firebase 인증서 파일(json) 읽어오기, Gmail SMTP 서버로 이메일 전송 설정)
 2. /resources/community-service-adminsdk.json 파일 추가 (Firebase 인증서 파일(json))
 3. /resources/templates/login.html 에 vapidKey 코드 변경, const firebaseConfig 안의 코드 변경
-```
-$ git clone https://github.com/MyNameSieun/OH-YO.git
-$ cd OH-YO
-$ yarn
-& yarn start
-```
+
 
 <br>
 
