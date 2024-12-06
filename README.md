@@ -33,8 +33,6 @@ https://github.com/user-attachments/assets/23e45c6a-6beb-469d-8ac9-14162db31b65
 
 <a href="https://marmalade-canvas-697.notion.site/SNS-137bf0ca6d808015bc11f034aa36b300">![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)</a>
 
-
-
 <br>
 
 <!-- Top Button -->
@@ -89,6 +87,11 @@ https://github.com/user-attachments/assets/23e45c6a-6beb-469d-8ac9-14162db31b65
 ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
 
 <br>
+
+### ERD
+
+![community_feed](https://github.com/user-attachments/assets/4c719708-6a68-4018-a32b-3ad1113b1d9d)
+
 
 <!-- Top Button -->
 <p style='background: black; width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: auto;'><a href="#top" style='color: white; '>▲</a></p>
