@@ -552,7 +552,14 @@ https://github.com/user-attachments/assets/ef0aa0da-381d-4eaf-a782-4586ff5c855c
 | ![image](https://github.com/user-attachments/assets/1ef08794-e239-4f81-8bdd-9ec4dc382d04)
 
 
+### 5) 관리자 페이지
 
+| 메인화면                                          
+| ------------------------------------------------- |
+|![image](https://github.com/user-attachments/assets/c5d90037-0365-49e1-b2bf-35fe075869dc)
+
+
+ <br>
 
 <br>
 
