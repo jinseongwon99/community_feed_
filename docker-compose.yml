@@ -1,0 +1,24 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:jdk17
+    ports:
+      - "8081:8080" # Host 포트 : 컨테이너와 Jenkins 기본포트와 연결
+      - "50000:50000" # Host 포트 : Jenkins 에이전트와 통신에 사용되는 포트와 연결
+    volumes:
+      - ${HOST_JENKINS_HOME}:/var/jenkins_home  # Host의 Jenkins 데이터 디렉토리 : 컨테이너 내부의 경로에 마운트
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    links:
+     - worker-1
+
+  worker-1:
+    image: jenkins/jenkins:jdk17
+    volumes:
+      - ${HOST_JENKINS_WORKER_1}:/home/jenkins
+    environment:
+      - JENKINS_SLAVE_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqDo8LPWYyMzoCXFBVFO93EHqLoNOxxcPO/r3loYtXNS2ept/iCSGOc30AYcYj8PZRljF9GNfXM6hZH220oaJtpDn0BXn1JdvvLYaZ0CDDPce179Bfc25riIgAbzRXB2s76zEHyFz7J+jWCfXQQ0pS7VQDXpEAozKcFFz4O8HXFUGKk3R/gyN9Vv+GXLKE93KMDOWPRLccyJtPLVwK3g5VLzYTM4jz9LthwFrywwKqobL6Ezoip13jBbRWE48JocNWOY49L4wS9gUYg9WnqLJQun5g6qGN/SMPjv/MA2hnLVXnoV4COjSpZ3pkrIHmfFWsbqrvOwsdSdfFI2B1yBXoYGhYWLJzEjiufyQMQdAo17DMIuyQ6Dub8pgitOTlvgmtl1raCRzvVQGNz78mnPzCiRQnrULI83yw7lXbAFURqSdxYHznhUDtm0D1NiRDSUUwoEv9z7ZdR/BJoC9oDYU4gk0AlBurVMw+ZmAirFSh4ZgrrIilQHJvAX4oJpRqlcs=
+
+  sonarqube:
+    image: sonarqube:9-community
+    ports:
+      - "9000:9000"
