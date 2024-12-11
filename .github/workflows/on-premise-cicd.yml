@@ -43,7 +43,7 @@ jobs:
       - name: Build with Gradlew
         run: ./gradlew clean test bootJar #clean -> test -> bootJar 순서로 실행
 
-        # 위의 clean -> test -> bootJar 을 실행하면 -> build/libs 하위에
+        # 위의 clean -> test -> bootJar 을 실행하면 -> build/libs 하위에 생성된 .jar 파일을 add
       - name: Add version
         run: |
           mv build/libs/community_feed-1.0-SNAPSHOT.jar build/libs/cicd-community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
