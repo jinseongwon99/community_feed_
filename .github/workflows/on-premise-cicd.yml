@@ -46,13 +46,13 @@ jobs:
         # 위의 clean -> test -> bootJar 을 실행하면 -> build/libs 하위에 생성된 .jar 파일을 add
       - name: Add version
         run: |
-          mv build/libs/community_feed-1.0-SNAPSHOT.jar build/libs/cicd-community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
+          mv build/libs/community_feed-1.0-SNAPSHOT.jar build/libs/community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cicd-community_feed-application #cicd-community_feed-application.zip 파일로 ci runner 공간에 저장
-          path: build/libs/cicd-community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
+          name: community_feed-application #community_feed-application.zip 파일로 ci runner 공간에 저장
+          path: build/libs/community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
 
   # 실행할 가상머신 종류
   deploy:
@@ -64,7 +64,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: cicd-community_feed-application # build 한 아키텍처 파일 : cicd-community_feed-application.zip
+          name: community_feed-application # build 한 아키텍처 파일 : community_feed-application.zip
           path: build/libs/
 
       # EC2에 배포
@@ -77,6 +77,6 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" > private_key.pem
           
           chmod 600 private_key.pem
-          scp -i private_key.pem -o StrictHostKeyChecking=no build/libs/cicd-community_feed-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/cicd-community_feed-${{ needs.build.outputs.release }}.jar
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "pgrep java | xargs kill -9; nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/cicd-community_feed-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
+          scp -i private_key.pem -o StrictHostKeyChecking=no build/libs/community_feed-${{ needs.build.outputs.release }}.jar ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER_NAME }}/community_feed-${{ needs.build.outputs.release }}.jar
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST }} "pgrep java | xargs kill -9; nohup java -jar /home/${{ secrets.EC2_USER_NAME }}/community_feed-${{ needs.build.outputs.release }}.jar > app.log 2>&1 &"
           rm -f private_key.pem 
