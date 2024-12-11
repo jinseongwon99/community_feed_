@@ -1,0 +1,55 @@
+name: on-premise-cicd     #Github Actions 목록에서 보여지는 이름
+on:                       #언제 방아쇠를 당겨서 워크플러우를 실행할지 정즤
+  workflow_dispatch:
+    inputs:
+      tags:               #태그로 어떤 버젼인지 확인하기 위해 사용 (v1.0.0)
+        description: 'Set Tags Name'
+        required: true
+        default: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  #가상머신 종류
+    outputs:                #리턴 값
+      release: ${{ steps.set-version.outputs.VERSION_NAME }}  #버젼 명시
+    steps:                   # v1.0.0 -> v1-0-0 으로 변경
+      - id: set-version      # github(=on), event(=workflow-dispatch)
+        run: |               #입력 태그 값의 마침표(.)를 하이픈(-)으로 변환해 VERSION_NAME 변수로 설정하고, 이를 GITHUB_OUTPUT에 출력
+          echo "VERSION_NAME=$(echo "${{ github.event.inputs.tags }}" | sed "s/\./\-/g")" >> $GITHUB_OUTPUT
+
+      - name: Check Version Name
+        run: |
+          echo "Check Version -> ${{ steps.set-version.outputs.VERSION_NAME }}"
+
+        # 베포할 checkout 소스
+        #github marketplace 의 공식 checkout 액션 (actions/액션명@버젼)
+        # ㄴ ex) 4.17 버젼일 경우 v4로 작성 가능
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:   #파라미터
+          ref: '${{ github.event.inputs.tags }}'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +w gradlew
+
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version : 17
+          distribution : 'temurin'
+
+        # gradle 빌드
+        # 위치: 위에 checkout 으로 현재 프로젝트에 위치 => 현재 위치의 /gradlew 을 실행
+      - name: Build with Gradlew
+        run: ./gradlew clean test bootJar #clean -> test -> bootJar 순서로 실행
+
+        # 위의 clean -> test -> bootJar 을 실행하면 -> build/libs 하위에
+      - name: Add version
+        run: |
+          mv build/libs/community_feed-1.0-SNAPSHOT.jar build/libs/cicd-community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cicd-community_feed-application #cicd-community_feed-application.zip 파일로 ci runner 공간에 저장
+          path: build/libs/cicd-community_feed-${{ steps.set-version.outputs.VERSION_NAME }}.jar
