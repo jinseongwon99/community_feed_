@@ -14,7 +14,7 @@ services:
   worker-1:
     image: jenkins/ssh-agent:jdk17
     volumes:
-      - ${HOST_JENKINS_WORKER_1}:/home/jenkins
+      - my_worker_volume:/home/jenkins  # 볼륨 이름을 직접 설정
     environment:
       - JENKINS_SLAVE_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqDo8LPWYyMzoCXFBVFO93EHqLoNOxxcPO/r3loYtXNS2ept/iCSGOc30AYcYj8PZRljF9GNfXM6hZH220oaJtpDn0BXn1JdvvLYaZ0CDDPce179Bfc25riIgAbzRXB2s76zEHyFz7J+jWCfXQQ0pS7VQDXpEAozKcFFz4O8HXFUGKk3R/gyN9Vv+GXLKE93KMDOWPRLccyJtPLVwK3g5VLzYTM4jz9LthwFrywwKqobL6Ezoip13jBbRWE48JocNWOY49L4wS9gUYg9WnqLJQun5g6qGN/SMPjv/MA2hnLVXnoV4COjSpZ3pkrIHmfFWsbqrvOwsdSdfFI2B1yBXoYGhYWLJzEjiufyQMQdAo17DMIuyQ6Dub8pgitOTlvgmtl1raCRzvVQGNz78mnPzCiRQnrULI83yw7lXbAFURqSdxYHznhUDtm0D1NiRDSUUwoEv9z7ZdR/BJoC9oDYU4gk0AlBurVMw+ZmAirFSh4ZgrrIilQHJvAX4oJpRqlcs=
     networks:
@@ -30,3 +30,6 @@ services:
 networks:
   jenkins_network:
     driver: bridge
+
+volumes:
+  my_worker_volume: {}  # 볼륨 정의 추가
